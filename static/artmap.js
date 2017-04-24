@@ -6,10 +6,15 @@ var placeLookup = {"Berlin, Germany": {lat: 52.496407, lng: 13.396856},
                    "Switzerland": {lat: 47.002673, lng: 8.025174},
                    "Luxembourg": {lat: 49.677262, lng: 6.013087}}
 
+var lineSymbol;
+
 function initializeMap(){
   console.log("Initializing map");
 
   mapCenter = new google.maps.LatLng(50.078725, 14.367406);
+  lineSymbol = {
+   path: google.maps.SymbolPath.FORWARD_CLOSED_ARROW
+  };
 
   var mapOptions = {
     center: mapCenter,
@@ -39,15 +44,14 @@ function reload(){
 function getTestData(){
   $.ajax({url: "/testart",
           success: function(result){
-            console.log( JSON.parse(result));
-            displayData( JSON.parse(result));
+            displayData( JSON.parse(result) );
           }});
 }
 
 function displayData(data){
   var pieces = data.pieces;
   var artists = data['artists'];
-  console.log(data);
+
   for(var i = 0; i<pieces.length; i++){
     var country = pieces[i].countryOfOrigin;
     var gamesCountry = pieces[i].gamesCountry;
@@ -66,10 +70,22 @@ function displayData(data){
       path: pathCoords,
       strokeColor: '#FF0000',
       strokeOpacity: 1.0,
-      strokeWeight: 2
+      strokeWeight: 2,
+      //from https://developers.google.com/maps/documentation/javascript/examples/overlay-symbol-arrow
+      icons: [{
+        icon: lineSymbol,
+        offset: '100%'
+      }]
     });
-    
+
     path.setMap(map);
     arrows.push(path);
   }
+}
+
+function removeArrows(){
+  for(var i = 0; i<arrows.length; i++){
+    arrows[i].setMap(null);
+  }
+  arrows = [];
 }
