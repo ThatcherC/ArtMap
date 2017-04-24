@@ -4,6 +4,7 @@
     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css" integrity="sha384-BVYiiSIFeK1dGmJRAkycuHAHRg32OmUcww7on3RYdg4Va+PmSTsz/K68vbdEjh4u" crossorigin="anonymous">
     <script src="https://cdn.plot.ly/plotly-latest.min.js"></script>
     <script   src="https://code.jquery.com/jquery-3.1.1.min.js"   integrity="sha256-hVVnYaiADRTO2PzUGmuLJr8BLUSjGIZsDYGmIJLv2b8="   crossorigin="anonymous"></script>
+		<script src="artmap.js"></script>
 	</head>
 	<body>
 		<div class="container-fluid">
@@ -12,14 +13,72 @@
 			</div>
 			<div class="row">
 				<!-- Map section -->
-				<div class="col-lg-8"><div style="height:75%" id="gmap">Map didn't load</div></div>
+				<div class="col-md-8"><div style="height:75%" id="gmap">Map didn't load</div></div>
 
 				<!-- Filter and info section -->
-				<div class="col-lg-4" id="controlbox">
+				<div class="col-md-4" id="controlbox">
 					<center><h1>Sidebar!</h1></center>
 					<center><i>Stuff will go here</i></center>
+					<!-- control panel -->
+					<div class="well">
+						<!-- Year selector -->
+						<div class="form-group">
+							<label class="control-label col-sm-4">Year</label>
+							<div class="col-sm-6">
+								<input name="boxSize" type="range" min="1912" max="1948" step="1" value="1912" onchange="update()">
+							</div>
+						</div>
+						</br>
+						<!-- Medal type selector -->
+						<div class="form-group">
+							<label class="control-label col-sm-4">Medals</label>
+							<div class="col-sm-8">
+								<div class="checkbox">
+								  <label>
+								    <input type="checkbox" value="">
+								    Gold
+								  </label>
+								</div>
+								<div class="checkbox">
+								  <label>
+								    <input type="checkbox" value="">
+								    Silver
+								  </label>
+								</div>
+								<div class="checkbox">
+								  <label>
+								    <input type="checkbox" value="">
+								    Bronze
+								  </label>
+								</div>
+							</div>
+						</div></br></br></br>
+
+						<div>
+							<div class="form-group">
+								<div class="col-sm-2 col-md-offset-8">
+									<button type="button" class="btn btn-default" onclick="reload()">Reload</button>
+								</div>
+							</div>
+						</div></br></br>
+						<div>
+							<div class="form-group">
+								<div class="col-sm-2 col-md-offset-8">
+									<button type="button" class="btn btn-default" onclick="getTestData()">Get Test Data</button>
+								</div>
+							</div>
+						</div></br></br>
+					</div>
+
+					<!-- info panel -->
+					<div class="well">
+						<big>Info Panel</big>
+					</div>
+
 				</div>
 			</div>
 		</div>
+		<script async defer
+    		  src="https://maps.googleapis.com/maps/api/js?key=AIzaSyCl5w3Zbb4DJGzWiHmQG3VxDjJUmwIt0xU&callback=initializeMap"></script>
 	</body>
 </html>
