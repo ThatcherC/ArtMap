@@ -27,9 +27,9 @@ Plan:
     Returns [[pieces],[artists (index by id)]]
 - [ ] Schemes:
   - [ ] Piece
-        [title, url, artist, countryOfOrigin??, year, medal]
+        [title, url, artist, countryOfOrigin??, year, hostCountry, medal]
   - [ ] Artist
-        [name, bio, country, personid]
+        [name, bio, location, personid]
 - [ ] Page:
   - [ ] Map Embed
   - [ ] Filters and controls
