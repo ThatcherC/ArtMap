@@ -3,13 +3,13 @@
 		<title>ArtMap</title>
     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css" integrity="sha384-BVYiiSIFeK1dGmJRAkycuHAHRg32OmUcww7on3RYdg4Va+PmSTsz/K68vbdEjh4u" crossorigin="anonymous">
     <script src="https://cdn.plot.ly/plotly-latest.min.js"></script>
-    <script   src="https://code.jquery.com/jquery-3.1.1.min.js"   integrity="sha256-hVVnYaiADRTO2PzUGmuLJr8BLUSjGIZsDYGmIJLv2b8="   crossorigin="anonymous"></script>
+    <script src="https://code.jquery.com/jquery-3.1.1.min.js" integrity="sha256-hVVnYaiADRTO2PzUGmuLJr8BLUSjGIZsDYGmIJLv2b8=" crossorigin="anonymous"></script>
 		<script src="artmap.js"></script>
 	</head>
 	<body>
 		<div class="container-fluid">
 			<div class="page-header">
-				<h1>ArtMap <small><i>Description??</i></small></h1>
+				<h1>ArtMap <small><i>Description?</i></small></h1>
 			</div>
 			<div class="row">
 				<!-- Map section -->
@@ -18,14 +18,14 @@
 				<!-- Filter and info section -->
 				<div class="col-md-4" id="controlbox">
 					<center><h1>Sidebar!</h1></center>
-					<center><i>Stuff will go here</i></center>
+					<center><i>Additional filters will go here</i></center>
 					<!-- control panel -->
 					<div class="well">
 						<!-- Year selector -->
 						<div class="form-group">
 							<label class="control-label col-sm-4">Year</label>
 							<div class="col-sm-6">
-								<input name="boxSize" type="range" min="1912" max="1948" step="1" value="1912" onchange="update()">
+								<input name="boxSize" type="range" min="1912" max="1948" step="4" value="1912" onchange="update()">
 							</div>
 						</div>
 						</br>
@@ -72,7 +72,8 @@
 
 					<!-- info panel -->
 					<div class="well">
-						<big>Info Panel</big>
+						<big>Info Panel</big></br>
+						<i>Artist bios, other information</i>
 					</div>
 
 				</div>
