@@ -1,30 +1,43 @@
 //var pg = require('pg');
 var express = require('express');
+var mysql = 		require('mysql');
 var app = express();
 
 var config = {
-  user: "candidate",
-  database: "memory_tracker",
-  host: "aws-us-east-1-portal.8.dblayer.com",
-  password: "giap-quib-fac-wav-mi",
-  port: 10131
-}
+		'host':'localhost',
+		'user':'root',
+		'password':'abso1utehe1icopter',    //may need to change this TODO
+		'database':'olympics'
+	};
+
+var db = mysql.createConnection(config);
+db.connect();
 
 app.use(express.static('static'));
 app.listen(8000);
 
-//var database = new pg.Client(config);
-/*
-database.connect(function(err){
-  if(err) throw err;
-});
-*/
 app.get("/getart",function(req, res){
   var year =    parseInt(req.query.year); //TODO: don't parse in probably
   var medal =   parseInt(req.query.end);
   var country = parseInt(req.query.bins);
   var type = req.query.page;
   var dataType = req.query.type;
+
+  db.query("select r.Title, r.Athlete, r.personID, r.Medal, r.Team \
+            from olympic_results as r where year=? and `General Category`=?",
+            [1948,"Architecture"],
+    function(err,rows){
+      if(err){
+      	console.log(err);
+      }else{
+        console.log(rows);
+      }
+    });
+  res.end("response");
+
+
+  //things needed:
+  //Title, host city, (General) Category, Medal artist name, NOC(Team), artist bio
 
   //Sends back an object of
   //{pieces: [...], artists: [...]}
