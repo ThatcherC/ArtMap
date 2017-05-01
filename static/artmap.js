@@ -8,6 +8,10 @@ var placeLookup = {"Berlin, Germany": {lat: 52.496407, lng: 13.396856},
 
 var lineSymbol;
 
+var yearSlider;
+var yearLabel;
+var categorySelector;
+
 function initializeMap(){
   console.log("Initializing map");
 
@@ -31,14 +35,23 @@ function initializeMap(){
   map = new google.maps.Map(document.getElementById("gmap"),
     mapOptions);
 
-  sizeSlider = document.getElementsByName("boxSize")[0];
-  sizeLabel = document.getElementById("boxSizeLabel");
+  yearSlider = document.getElementById("yearSlider");
+  yearLabel = document.getElementById("yearLabel");
+  categorySelector = document.getElementById("category")
 }
 
+function updateYear(){
+  yearLabel.innerHTML="Year: "+yearSlider.value;
+}
 
 function reload(){
   //code to request new data will go here
   console.log("Reloading...");
+  $.ajax({url: "/getart",
+          success: function(result){
+            //displayData( JSON.parse(result) );
+            console.log(result);
+          }});
 }
 
 function getTestData(){
