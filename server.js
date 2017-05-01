@@ -16,6 +16,25 @@ db.connect();
 app.use(express.static('static'));
 app.listen(8000);
 
+app.get("/countryCounts",function(req, res){
+  var year =    parseInt(req.query.year); //TODO: don't parse in probably
+  var medal =   parseInt(req.query.end);
+  var country = parseInt(req.query.bins);
+  var type = req.query.page;
+  var dataType = req.query.type;
+
+  db.query("select Team as country, count(*) as entries, count(Medal) as medals from olympic_results where year=? group by Team order by count(*) DESC;",
+            [year],
+    function(err,rows){
+      if(err){
+      	console.log(err);
+      }else{
+        console.log(rows);
+        res.end( JSON.stringify(rows) );
+      }
+    });
+  });
+
 app.get("/getart",function(req, res){
   var year =    parseInt(req.query.year); //TODO: don't parse in probably
   var medal =   parseInt(req.query.end);
