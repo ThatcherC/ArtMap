@@ -47,7 +47,8 @@ function updateYear(){
 function reload(){
   //code to request new data will go here
   console.log("Reloading...");
-  $.ajax({url: "/getart",
+  var year = yearSlider.value;
+  $.ajax({url: "/countryCounts?year="+year,
           success: function(result){
             //displayData( JSON.parse(result) );
             console.log(result);
