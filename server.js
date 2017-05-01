@@ -23,6 +23,8 @@ app.get("/getart",function(req, res){
   var type = req.query.page;
   var dataType = req.query.type;
 
+  //select Team, count(*) from olympic_results group by Team order by count(*) DESC;
+
   db.query("select r.Title, r.Athlete, r.personID, r.Medal, r.Team \
             from olympic_results as r where year=? and `General Category`=?",
             [1948,"Architecture"],
