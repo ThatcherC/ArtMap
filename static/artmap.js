@@ -38,6 +38,7 @@ function initializeMap(){
   yearSlider = document.getElementById("yearSlider");
   yearLabel = document.getElementById("yearLabel");
   categorySelector = document.getElementById("category")
+  infoPanel = document.getElementById("infoWindow")
 }
 
 function updateYear(){
@@ -51,7 +52,8 @@ function reload(){
   $.ajax({url: "/countryCounts?year="+year,
           success: function(result){
             //displayData( JSON.parse(result) );
-            console.log(result);
+            //console.log(result);
+            displayCountryCount(JSON.parse(result));
           }});
 }
 
@@ -60,6 +62,24 @@ function getTestData(){
           success: function(result){
             displayData( JSON.parse(result) );
           }});
+}
+
+function displayCountryCount(data){
+  var text = "<big>"+yearSlider.value+" Results</big></br>";
+  text += "<div style='height:200px; overflow: auto;' >";
+  text += "<table class='table'>"
+  text += "<tr><th>Country</th><th>Gold</th><th>Silver</th><th>Bronze</th><th>Total Entries</th></tr>";
+  for(var i = 0; i < data.length; i++){
+    var line = "<tr><td><b>"+data[i]["country"]+":</b></td>";
+    line+="<td>"+data[i].golds+"</td>";
+    line+="<td>"+data[i].silvers+"</td>";
+    line+="<td>"+data[i].bronzes+"</td>";
+    line+="<td>"+data[i].entries+"</td>";
+    line+="</tr>";
+    text+=line;
+  }
+  text+="</table></div>";
+  infoPanel.innerHTML = text;
 }
 
 function displayData(data){
