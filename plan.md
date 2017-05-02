@@ -1,3 +1,18 @@
+alter results table so it has a gold, silver, and bronze column
+
+-------------
+Proposed flow: select a year and medals and maybe other stuff
+
+Map shows lines from each country to the host city, varying thickness
+info window lists countries and medal counts
+
+Click country in map or info window and get entries from that country in the info window
+
+Click an entry to get its info (new page???)
+
+Click an artist to see all their entries (new page)
+
+-----------
 Filters
 - Year of Games
 - Model

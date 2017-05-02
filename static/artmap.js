@@ -64,12 +64,14 @@ function getTestData(){
           }});
 }
 
+//displays medals and entries for each country in a given year
 function displayCountryCount(data){
   var text = "<big>"+yearSlider.value+" Results</big></br>";
   text += "<div style='height:200px; overflow: auto;' >";
   text += "<table class='table'>"
   text += "<tr><th>Country</th><th>Gold</th><th>Silver</th><th>Bronze</th><th>Total Entries</th></tr>";
   for(var i = 0; i < data.length; i++){
+    //TODO draw lines connecting places
     var line = "<tr><td><b>"+data[i]["country"]+":</b></td>";
     line+="<td>"+data[i].golds+"</td>";
     line+="<td>"+data[i].silvers+"</td>";
@@ -82,6 +84,8 @@ function displayCountryCount(data){
   infoPanel.innerHTML = text;
 }
 
+
+//Draws stuff on the map - old, might not work anymore
 function displayData(data){
   var pieces = data.pieces;
   var artists = data['artists'];
