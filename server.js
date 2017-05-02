@@ -23,7 +23,11 @@ app.get("/countryCounts",function(req, res){
   var type = req.query.page;
   var dataType = req.query.type;
 
-  db.query("select Team as country, count(*) as entries, count(Medal) as medals from olympic_results where year=? group by Team order by count(*) DESC;",
+  db.query("select Team as country, count(*) as entries, \
+            count(gold) as golds, \
+            count(silver) as silvers, \
+            count(bronze) as bronzes \
+            from olympic_results where year=? group by Team order by count(*) DESC;",
             [year],
     function(err,rows){
       if(err){
