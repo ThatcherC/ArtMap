@@ -1,11 +1,5 @@
 var arrows = [];
 var map;
-
-var placeLookup = {"Berlin, Germany": {lat: 52.496407, lng: 13.396856},
-                   "New York City": {lat: 40.719513, lng:-74.010806},
-                   "Switzerland": {lat: 47.002673, lng: 8.025174},
-                   "Luxembourg": {lat: 49.677262, lng: 6.013087}}
-
 var lineSymbol;
 
 var yearSlider;
@@ -38,7 +32,7 @@ function initializeMap(){
   yearSlider = document.getElementById("yearSlider");
   yearLabel = document.getElementById("yearLabel");
   categorySelector = document.getElementById("category")
-  infoPanel = document.getElementById("infoWindow")
+  infoPanel = document.getElementById("infoWindow");
 }
 
 function updateYear(){
@@ -70,6 +64,14 @@ function displayCountryCount(data){
   text += "<div style='height:200px; overflow: auto;' >";
   text += "<table class='table'>"
   text += "<tr><th>Country</th><th>Gold</th><th>Silver</th><th>Bronze</th><th>Total Entries</th></tr>";
+
+  var minPathWeight = 2; //?
+  var totalEntries = data.reduce(function(acc, cur, i, a){return acc+cur.entries}, 0);
+  var fewestEntries = data.reduce(( acc, cur ) => Math.min( acc, cur.entries ), 100000);
+
+  console.log("Total entries: "+totalEntries);
+  console.log("fewestEntries: "+fewestEntries);
+
   for(var i = 0; i < data.length; i++){
     //TODO draw lines connecting places
     var line = "<tr><td><b>"+data[i]["country"]+":</b></td>";
@@ -80,8 +82,31 @@ function displayCountryCount(data){
     line+="</tr>";
     text+=line;
   }
+
   text+="</table></div>";
   infoPanel.innerHTML = text;
+
+  for(var i = 0; i < data.length; i++){
+    var start = placeLookup[data[i].country];
+    var end = {lat: 52.30, lng: 	13.25};      //TODO year city look up
+
+    var pathCoords = [start, end];
+
+    path = new google.maps.Polyline({
+      path: pathCoords,
+      strokeColor: '#CCCCCC',
+      strokeOpacity: 1.0,
+      strokeWeight: 2,//2*Math.log(data[i].entries/fewestEntries),
+      //from https://developers.google.com/maps/documentation/javascript/examples/overlay-symbol-arrow
+      icons: [{
+        icon: lineSymbol,
+        offset: '100%'
+      }]
+    });
+
+    path.setMap(map);
+    arrows.push(path);
+  }
 }
 
 
@@ -127,3 +152,55 @@ function removeArrows(){
   }
   arrows = [];
 }
+
+var placeLookup =  {"Germany"        : {lat: 52.30, lng: 	13.25},
+                    "Italy"          : {lat: 41.54, lng: 	12.29},
+                    "France"         : {lat: 48.50, lng: 2.20},
+                    "United States"  : {lat: 39.91, lng: 77.02},
+                    "Bohemia"       :{lat: 0, lng: 0},        //TODO fix
+                    "Canada"         : {lat: 45.27, lng: 75.42},
+                    "Russia"        : {lat: 0, lng: 0},        //TODO fix
+                    "Poland"         : {lat: 52.13, lng: 21.00},
+                    "Great Britain"  : {lat: 51.36, lng: 0.05},
+                    "Switzerland"    : {lat: 46.57, lng: 7.28},
+                    "Unknown"       : {lat: 0, lng: 0},        //TODO fix
+                    "Belgium"        : {lat: 50.51, lng: 4.21},
+                    "Norway"         : {lat: 59.55, lng: 10.45},
+                    "Hungary"        : {lat: 47.29, lng: 19.05},
+                    "Netherlands"    : {lat: 52.23, lng: 4.54},
+                    "Denmark"        : {lat: 55.41, lng: 12.34},
+                    "Monaco"        : {lat: 0, lng: 0},        //TODO fix
+                    "Yugoslavia"     : {lat: 44.50, lng: 20.37},
+                    "South Africa"   : {lat: 25.44, lng: 28.12},
+                    "Luxembourg"     : {lat: 49.37, lng: 6.09},
+                    "Czechoslovakia": {lat: 0, lng: 0},        //TODO fix
+                    "Spain"          : {lat: 40.25, lng: 3.45},
+                    "Greece"         : {lat: 37.58, lng: 23.46},
+                    "Ireland"        : {lat: 53.21, lng: 6.15},
+                    "Finland"        : {lat: 60.15, lng: 25.03},
+                    "Brazil"         : {lat: 15.47, lng: 47.55},
+                    "Uruguay"        : {lat: 34.50, lng: 56.11},
+                    "Australia"      : {lat: 35.15, lng: 149.08},
+                    "Egypt"          : {lat: 30.01, lng: 31.14},
+                    "Austria"        : {lat: 48.12, lng: 16.22},
+                    "Latvia"         : {lat: 56.53, lng: 24.08},
+                    "Mexico"         : {lat: 19.20, lng: 99.10},
+                    "Argentina"      : {lat: 36.30, lng: 60.00},
+                    "Peru"           : {lat: 12.00, lng: 77.00},
+                    "Romania"        : {lat: 44.27, lng: 26.10},
+                    "El Salvador"    : {lat: 13.40, lng: 89.10},
+                    "Venezuela"      : {lat: 10.30, lng: 66.55},
+                    "Bulgaria"       : {lat: 42.45, lng: 23.20},
+                    "Turkey"         : {lat: 39.57, lng: 32.54},
+                    "Sweden"         : {lat: 59.20, lng: 18.03},
+                    "Guatemala"      : {lat: 14.40, lng: 90.22},
+                    "Colombia"       : {lat: 4.34, lng: 74.00},
+                    "Cuba"           : {lat: 23.08, lng: 82.22},
+                    "Haiti"          : {lat: 18.40, lng: 72.20},
+                    "Japan"          : {lat: 0, lng: 0},        //TODO fix
+                    "Bolivia"        : {lat: 16.20, lng: 68.10},
+                    "China"          : {lat: 39.55, lng: 116.20},
+                    "Iceland"        : {lat: 64.10, lng: 21.57},
+                    "Portugal"       : {lat: 38.42, lng: 09.10},
+                    "India"          : {lat: 28.37, lng: 77.13},
+                    "Philippines"    : {lat: 14.40, lng: 121.03}}
