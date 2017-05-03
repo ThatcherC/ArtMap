@@ -6,6 +6,8 @@ var yearSlider;
 var yearLabel;
 var categorySelector;
 
+var dataForAllCountries;
+
 function initializeMap(){
   console.log("Initializing map");
 
@@ -47,7 +49,18 @@ function reload(){
           success: function(result){
             //displayData( JSON.parse(result) );
             //console.log(result);
-            displayCountryCount(JSON.parse(result));
+            dataForAllCountries = JSON.parse(result)
+            displayCountryCount( dataForAllCountries );
+          }});
+}
+
+function showCountry(country){
+  var year = yearSlider.value;
+
+  $.ajax({url: "/getEntries?year="+year+"&country="+country,
+          success: function(result){
+            dataForOneCountry = JSON.parse(result)
+            displayOneCountryText( dataForOneCountry, country);
           }});
 }
 
@@ -59,36 +72,15 @@ function getTestData(){
 }
 
 //displays medals and entries for each country in a given year
+//TODO this is very poorly named
 function displayCountryCount(data){
   removeArrows();
 
-  var text = "<big>"+yearSlider.value+" Results</big></br>";
-  text += "<div style='height:200px; overflow: auto;' >";
-  text += "<table class='table'>"
-  text += "<tr><th>Country</th><th>Gold</th><th>Silver</th><th>Bronze</th><th>Total Entries</th></tr>";
+  displayCountryText(data);
 
   var minPathWeight = 2; //?
   var totalEntries = data.reduce(function(acc, cur, i, a){return acc+cur.entries}, 0);
   var fewestEntries = data.reduce(( acc, cur ) => Math.min( acc, cur.entries ), 100000);
-
-  console.log("Total entries: "+totalEntries);
-  console.log("fewestEntries: "+fewestEntries);
-
-  for(var i = 0; i < data.length; i++){
-    //TODO draw lines connecting places
-    var line = "<tr><td><a onclick='showCountry(\""+
-                  data[i]["country"] +
-                  "\")'><b>"+data[i]["country"]+":</b></a></td>";
-    line+="<td>"+data[i].golds+"</td>";
-    line+="<td>"+data[i].silvers+"</td>";
-    line+="<td>"+data[i].bronzes+"</td>";
-    line+="<td>"+data[i].entries+"</td>";
-    line+="</tr>";
-    text+=line;
-  }
-
-  text+="</table></div>";
-  infoPanel.innerHTML = text;
 
   for(var i = 0; i < data.length; i++){
     var start = placeLookup[data[i].country];
@@ -98,7 +90,7 @@ function displayCountryCount(data){
 
     path = new google.maps.Polyline({
       path: pathCoords,
-      strokeColor: '#CCCCCC',
+      strokeColor: '#AAAAAA',
       strokeOpacity: 1.0,
       strokeWeight: 2,//2*Math.log(data[i].entries/fewestEntries),
       //from https://developers.google.com/maps/documentation/javascript/examples/overlay-symbol-arrow
@@ -119,6 +111,54 @@ function displayCountryCount(data){
   }
 }
 
+//TODO also kinda poorly named
+function displayCountryText(data){
+  var text = "<big>"+yearSlider.value+" Results</big></br>";
+  text += "<div style='height:200px; overflow: auto;' >";
+  text += "<table class='table'>"
+  text += "<tr><th>Country</th><th>Gold</th><th>Silver</th><th>Bronze</th><th>Total Entries</th></tr>";
+
+  for(var i = 0; i < data.length; i++){
+    //TODO draw lines connecting places
+    var line = "<tr><td><a onclick='showCountry(\""+
+                  data[i]["country"] +
+                  "\")'><b>"+data[i]["country"]+"</b></a></td>";
+    line+="<td>"+data[i].golds+"</td>";
+    line+="<td>"+data[i].silvers+"</td>";
+    line+="<td>"+data[i].bronzes+"</td>";
+    line+="<td>"+data[i].entries+"</td>";
+    line+="</tr>";
+    text+=line;
+  }
+
+  text+="</table></div>";
+  infoPanel.innerHTML = text;
+}
+
+function displayOneCountryText(data, country){
+  console.log(data);
+  var text = "<big>"+country+"'s' Entries in "+yearSlider.value+"</big>";
+  text += "    <a onclick='displayCountryText(dataForAllCountries)'>(back)</a>"
+  text += "<div style='height:200px; overflow: auto;' >";
+  text += "<table class='table'>"
+  text += "<tr><th>Title</th><th>Category</th><th>Award</th></tr>";
+
+  for(var i = 0; i < data.length; i++){
+    var award = data[i].award;
+    if(award==null) award=" ";
+
+    var line = "<tr><td><a target='_blank' href=\"/entry?id="+
+                  data[i].id +
+                  "\"><b>"+data[i].title+"</b></a></td>";
+    line+="<td>"+data[i].cat+"</td>";
+    line+="<td>"+award+"</td>";
+    line+="</tr>";
+    text+=line;
+  }
+
+  text+="</table></div>";
+  infoPanel.innerHTML = text;
+}
 
 //Draws stuff on the map - old, might not work anymore
 function displayData(data){
@@ -208,7 +248,7 @@ var placeLookup =  {"Germany"        : {lat: 52.30, lng: 	13.25},
                     "Cuba"           : {lat: 23.08, lng: -82.22},
                     "Haiti"          : {lat: 18.40, lng: -72.20},
                     "Japan"          : {lat: 0, lng: 0},        //TODO fix
-                    "Bolivia"        : {lat: 16.20, lng: -68.10},
+                    "Bolivia"        : {lat: -16.20, lng: -68.10},
                     "China"          : {lat: 39.55, lng: 116.20},
                     "Iceland"        : {lat: 64.10, lng: 21.57},
                     "Portugal"       : {lat: 38.42, lng: 09.10},
