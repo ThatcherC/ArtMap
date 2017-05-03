@@ -24,7 +24,7 @@
 						<ul>
 						<% for(var i in works){ %>
 							<li>
-								<i><%= works[i].title %></i> - <%= works[i].year %>
+								<a href="/entry?id=<%= works[i].id %>"><i><%= works[i].title %></i></a> - <%= works[i].year %>
 							</li>
 						<% } %>
 						</ul
