@@ -76,7 +76,9 @@ function displayCountryCount(data){
 
   for(var i = 0; i < data.length; i++){
     //TODO draw lines connecting places
-    var line = "<tr><td><b>"+data[i]["country"]+":</b></td>";
+    var line = "<tr><td><a onclick='showCountry(\""+
+                  data[i]["country"] +
+                  "\")'><b>"+data[i]["country"]+":</b></a></td>";
     line+="<td>"+data[i].golds+"</td>";
     line+="<td>"+data[i].silvers+"</td>";
     line+="<td>"+data[i].bronzes+"</td>";
