@@ -60,6 +60,8 @@ function getTestData(){
 
 //displays medals and entries for each country in a given year
 function displayCountryCount(data){
+  removeArrows();
+
   var text = "<big>"+yearSlider.value+" Results</big></br>";
   text += "<div style='height:200px; overflow: auto;' >";
   text += "<table class='table'>"
@@ -103,9 +105,15 @@ function displayCountryCount(data){
         offset: '100%'
       }]
     });
+    var marker = new google.maps.Marker({
+        position: start,
+        title: data[i].country
+    });
 
+    marker.setMap(map);
     path.setMap(map);
     arrows.push(path);
+    arrows.push(marker);
   }
 }
 
@@ -156,9 +164,9 @@ function removeArrows(){
 var placeLookup =  {"Germany"        : {lat: 52.30, lng: 	13.25},
                     "Italy"          : {lat: 41.54, lng: 	12.29},
                     "France"         : {lat: 48.50, lng: 2.20},
-                    "United States"  : {lat: 39.91, lng: 77.02},
+                    "United States"  : {lat: 39.91, lng: -77.02},
                     "Bohemia"       :{lat: 0, lng: 0},        //TODO fix
-                    "Canada"         : {lat: 45.27, lng: 75.42},
+                    "Canada"         : {lat: 45.27, lng: -75.42},
                     "Russia"        : {lat: 0, lng: 0},        //TODO fix
                     "Poland"         : {lat: 52.13, lng: 21.00},
                     "Great Britain"  : {lat: 51.36, lng: 0.05},
@@ -171,34 +179,34 @@ var placeLookup =  {"Germany"        : {lat: 52.30, lng: 	13.25},
                     "Denmark"        : {lat: 55.41, lng: 12.34},
                     "Monaco"        : {lat: 0, lng: 0},        //TODO fix
                     "Yugoslavia"     : {lat: 44.50, lng: 20.37},
-                    "South Africa"   : {lat: 25.44, lng: 28.12},
+                    "South Africa"   : {lat: -25.44, lng: 28.12},
                     "Luxembourg"     : {lat: 49.37, lng: 6.09},
                     "Czechoslovakia": {lat: 0, lng: 0},        //TODO fix
                     "Spain"          : {lat: 40.25, lng: 3.45},
                     "Greece"         : {lat: 37.58, lng: 23.46},
                     "Ireland"        : {lat: 53.21, lng: 6.15},
                     "Finland"        : {lat: 60.15, lng: 25.03},
-                    "Brazil"         : {lat: 15.47, lng: 47.55},
-                    "Uruguay"        : {lat: 34.50, lng: 56.11},
+                    "Brazil"         : {lat: -15.47, lng: -47.55},
+                    "Uruguay"        : {lat: -34.50, lng: -56.11},
                     "Australia"      : {lat: 35.15, lng: 149.08},
                     "Egypt"          : {lat: 30.01, lng: 31.14},
                     "Austria"        : {lat: 48.12, lng: 16.22},
                     "Latvia"         : {lat: 56.53, lng: 24.08},
-                    "Mexico"         : {lat: 19.20, lng: 99.10},
-                    "Argentina"      : {lat: 36.30, lng: 60.00},
-                    "Peru"           : {lat: 12.00, lng: 77.00},
+                    "Mexico"         : {lat: 19.20, lng: -99.10},
+                    "Argentina"      : {lat: -36.30, lng: -60.00},
+                    "Peru"           : {lat: -12.00, lng: -77.00},
                     "Romania"        : {lat: 44.27, lng: 26.10},
-                    "El Salvador"    : {lat: 13.40, lng: 89.10},
-                    "Venezuela"      : {lat: 10.30, lng: 66.55},
+                    "El Salvador"    : {lat: 13.40, lng: -89.10},
+                    "Venezuela"      : {lat: 10.30, lng: -66.55},
                     "Bulgaria"       : {lat: 42.45, lng: 23.20},
                     "Turkey"         : {lat: 39.57, lng: 32.54},
                     "Sweden"         : {lat: 59.20, lng: 18.03},
-                    "Guatemala"      : {lat: 14.40, lng: 90.22},
-                    "Colombia"       : {lat: 4.34, lng: 74.00},
-                    "Cuba"           : {lat: 23.08, lng: 82.22},
-                    "Haiti"          : {lat: 18.40, lng: 72.20},
+                    "Guatemala"      : {lat: 14.40, lng: -90.22},
+                    "Colombia"       : {lat: 4.34, lng:  -74.00},
+                    "Cuba"           : {lat: 23.08, lng: -82.22},
+                    "Haiti"          : {lat: 18.40, lng: -72.20},
                     "Japan"          : {lat: 0, lng: 0},        //TODO fix
-                    "Bolivia"        : {lat: 16.20, lng: 68.10},
+                    "Bolivia"        : {lat: 16.20, lng: -68.10},
                     "China"          : {lat: 39.55, lng: 116.20},
                     "Iceland"        : {lat: 64.10, lng: 21.57},
                     "Portugal"       : {lat: 38.42, lng: 09.10},
