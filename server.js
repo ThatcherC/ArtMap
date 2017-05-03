@@ -33,7 +33,6 @@ app.get("/countryCounts",function(req, res){
       if(err){
       	console.log(err);
       }else{
-        console.log(rows);
         res.end( JSON.stringify(rows) );
       }
     });
