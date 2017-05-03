@@ -38,13 +38,13 @@ app.get("/countryCounts",function(req, res){
     });
   });
 
-//gets entries (Title, Artist, Category, Award) for given filters
-app.get("/entries",function(req, res){
+//gets entries (Title, Artist, Category, Award, id) for given filters
+app.get("/getEntries",function(req, res){
   var year = parseInt(req.query.year);
   var country = req.query.country;
 
-  db.query("select Title as title, Athlete as competitor, personID as id,\
-            Medal as award, `General Category` as cat where Team=? and year=?",
+  db.query("select Title as title, Athlete as competitor, personID as artistid,\
+            Medal as award, `General Category` as cat, id from olympic_results where Team=? and year=?",
           [country, year], function(err, rows){
             if(err){
             	console.log(err);
@@ -65,14 +65,33 @@ app.get("/entry",function(req,res){
               	console.log(err);
               }else{
                 var r = rows[0];
-                res.render('entry.ejs',{imgurl: testURL, title: r.title, competitor: r.competitor, gencat: r.gcat, speccat: r.speccat, award: r.award});
+                res.render('entry.ejs',{imgurl: testURL, title: r.title, competitor: r.competitor, gencat: r.gcat, speccat: r.speccat, award: r.award, pid: r.pid});
               }
             });
 });
 
 //displays a web page for a given artist - ejs
 app.get("/competitor",function(req, res){
-
+  var artistID = req.query.id;
+  var testURL = "https://aapsa.net/images/staff/placeholder.png";
+  //make a request for this artist's bio and url
+  db.query("select BIO as bio, URL as url from olympic_bios where `ARTIST ID`=?;",
+            [artistID],function(err, rows){
+              if(err){
+              	console.log(err);
+              }else{
+                var bio = rows[0].bio;
+                var url = rows[0].url;
+                //make a query for this artist's works
+                //want to entry name, year, id, award
+                db.query("select Title as title, year, `Host City` as venue, Medal as award, id, \
+                          Athlete as artistName from olympic_results where personID=?;", [artistID],
+                          function(err, rows){
+                            var artistName = rows[0].artistName;
+                            res.render('artist.ejs',{imgurl: testURL, url: url, name: artistName, bio: bio, works: rows});
+                          });
+              }
+            });
 });
 
 app.get("/getart",function(req, res){
