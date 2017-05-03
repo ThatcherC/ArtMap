@@ -14,13 +14,13 @@ var db = mysql.createConnection(config);
 db.connect();
 
 app.use(express.static('static'));
+app.set('view engine', 'ejs'); // set up ejs for templating
 app.listen(8000);
 
 app.get("/countryCounts",function(req, res){
   var year =    parseInt(req.query.year); //TODO: don't parse in probably
-  var medal =   parseInt(req.query.end);
-  var country = parseInt(req.query.bins);
-  var type = req.query.page;
+  var medal =   req.query.medals;
+  var type =    req.query.type;
   var dataType = req.query.type;
 
   db.query("select Team as country, count(*) as entries, \
@@ -37,6 +37,43 @@ app.get("/countryCounts",function(req, res){
       }
     });
   });
+
+//gets entries (Title, Artist, Category, Award) for given filters
+app.get("/entries",function(req, res){
+  var year = parseInt(req.query.year);
+  var country = req.query.country;
+
+  db.query("select Title as title, Athlete as competitor, personID as id,\
+            Medal as award, `General Category` as cat where Team=? and year=?",
+          [country, year], function(err, rows){
+            if(err){
+            	console.log(err);
+            }else{
+              res.end( JSON.stringify(rows) );
+            }
+          });
+});
+
+//displays a web page for a given entry - ejs?
+app.get("/entry",function(req,res){
+  var id = parseInt(req.query.id);
+  var testURL = "https://s-media-cache-ak0.pinimg.com/originals/c3/d7/7f/c3d77f5f73a4f03041cb854d8dce6b82.jpg";
+  db.query("select Title as title, Athlete as competitor, personID as pid,\
+            Medal as award, `General Category` as gcat, event as speccat from olympic_results where id=?",
+            [id],function(err, rows){
+              if(err){
+              	console.log(err);
+              }else{
+                var r = rows[0];
+                res.render('entry.ejs',{imgurl: testURL, title: r.title, competitor: r.competitor, gencat: r.gcat, speccat: r.speccat, award: r.award});
+              }
+            });
+});
+
+//displays a web page for a given artist - ejs
+app.get("/competitor",function(req, res){
+
+});
 
 app.get("/getart",function(req, res){
   var year =    parseInt(req.query.year); //TODO: don't parse in probably
@@ -58,21 +95,6 @@ app.get("/getart",function(req, res){
       }
     });
   res.end("response");
-
-
-  //things needed:
-  //Title, host city, (General) Category, Medal artist name, NOC(Team), artist bio
-
-  //Sends back an object of
-  //{pieces: [...], artists: [...]}
-  //where pieces are made of [title, url, artistID, countryOfOrigin, year, medal]
-  //and artists are made of  [name, bio, country, artistID] (referenced by artistID though)
-/*
-  database.query("select distinct current_page from reports;",
-    function(err, results){
-      //....
-      res.end( JSON.stringify( pages ) );
-    })*/
 });
 
 app.get("/testart",function(req, res){
