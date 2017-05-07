@@ -1,0 +1,151 @@
+*{
+	margin: 0;
+	padding: 0;
+}
+
+body{
+	font-family: Georgia;
+	color: #fff;
+	font-size: 14px;
+	background: #222;
+}
+
+a {
+	color: #ffffcc;
+	text-decoration: none;
+	-webkit-transition: 0.5s;
+	-moz-transition: 0.5s;
+	-o-transition: 0.5s;
+	-ms-transition: 0.5s;
+	transition: 0.5s;
+}
+a:hover,
+a.selected, a.active {
+	color: #ffcc00;
+}
+
+h1,h2,h4,h5,h6 {
+	text-align: center;
+	color: #ffcc00;
+	text-shadow: #000 1px 1px 2px;
+	margin-bottom: 5px;
+}
+	h1 {
+		font-size: 24px;
+	}
+	h2 {
+		font-size: 14px;
+	}
+	h5{
+		color: white;
+	}
+	.sociales {
+		text-align: center;
+		margin-bottom: 20px;
+	}
+
+#timeline {
+	width: 1000px;
+	height: 1500px;
+	overflow: hidden;
+	margin: 20px auto;
+	position: relative;
+	background: url('http://www.csslab.cl/ejemplos/timelinr/latest/images/dot.gif') 3px top repeat-y;
+}
+#dates {
+	width: 100px;
+	height: 700px;
+	overflow: hidden;
+	float: left;
+}
+#dates li {
+	list-style: none;
+	width: 100px;
+	height: 100px;
+	line-height: 100px;
+	font-size: 24px;
+	padding-left: 10px;
+	background: url('http://www.csslab.cl/ejemplos/timelinr/latest/images/biggerdot.png') left center no-repeat;
+}
+#dates a {
+	line-height: 38px;
+	padding-bottom: 10px;
+}
+#dates .selected {
+	font-size: 24px;
+}
+		
+#issues {
+	width: 800px;
+	height: 1000px;
+	overflow: hidden;
+}	
+#issues li {
+	max-width: 800px; 
+	height: 1000px;
+	list-style: none;
+    text-align: center;
+
+}
+
+#issues li img {
+   	width: 200px; //add
+    height: 800px;
+	margin: 20px 40px 20px 60px;
+	-ms-filter: "progid:DXImageTransform.Microsoft.gradient(startColorstr=#00FFFFFF,endColorstr=#00FFFFFF)"; /* IE 8 */   
+	filter: progid:DXImageTransform.Microsoft.gradient(startColorstr=#00FFFFFF,endColorstr=#00FFFFFF);/* IE 6 & 7 */      
+	zoom: 1;
+	-webkit-transition: all 2s ease-in-out;
+    -moz-transition: all 2s ease-in-out;
+	-o-transition: all 2s ease-in-out;
+	-ms-transition: all 2s ease-in-out; 
+	transition: all 2s ease-in-out;
+	-webkit-transform: scale(1.1,1.1);
+	-moz-transform: scale(1.1,1.1);
+	-o-transform: scale(1.1,1.1);
+	-ms-transform: scale(1.1,1.1);
+	transform: scale(1.1,1.1);
+	float: left;
+	padding-right: 30px;
+	padding-bottom: 30px;
+	display: block;
+	margin-top: 0%;
+	margin-right: 1%;
+}
+
+#issues li h1 {
+	color: #ffcc00;
+	font-size: 24px;
+	text-align: right;
+	text-shadow: #000 1px 1px 2px;
+}
+
+#issues li h2{
+	color: white;
+	font-size: 18px;
+	text-align: right;
+	text-shadow: #000 1px 1px 2px;
+}
+
+#issues li h3{
+	color: white;
+	font-size: 14px;
+	text-align: right;
+	text-shadow: #000 1px 1px 2px;
+}
+
+#issues li h4 {
+	color: #ffcc00;
+	font-size: 12px;
+	text-align: right;
+	text-shadow: #000 1px 1px 2px;
+}
+
+#issues li p {
+	font-size: 12px;
+	margin: 10px 20px;
+	font-weight: normal;
+	line-height: 22px;
+	text-shadow: #000 1px 1px 2px;
+	text-align: right;
+}
