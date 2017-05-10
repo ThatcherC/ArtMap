@@ -60,7 +60,6 @@ function stringOfFilters(){
 
 function reload(){
   //code to request new data will go here
-  console.log("Reloading...");
   const longURL = "/countryCounts?"+stringOfFilters();
   $.ajax({url: longURL,
           success: function(result){
@@ -78,13 +77,6 @@ function showCountry(country){
           success: function(result){
             dataForOneCountry = JSON.parse(result)
             displayOneCountryText( dataForOneCountry, country);
-          }});
-}
-
-function getTestData(){
-  $.ajax({url: "/testart",
-          success: function(result){
-            displayData( JSON.parse(result) );
           }});
 }
 
@@ -192,7 +184,6 @@ function displayCountryText(data){
 }
 
 function displayOneCountryText(data, country){
-  console.log(data);
   var text = "<big>"+country+"'s' Entries in "+yearSlider.value+"</big>";
   text += "    <a onclick='displayCountryText(dataForAllCountries)'>(back)</a>"
   text += "<div style='height:200px; overflow: auto;' >";
