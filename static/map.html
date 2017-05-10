@@ -32,28 +32,67 @@
 						</br>
 						<!-- Medal type selector -->
 						<div class="form-group">
-							<label class="control-label col-sm-4">Medals</label>
+							<label class="control-label col-sm-4">Award</label>
 							<div class="col-sm-8">
-								<div class="checkbox">
-								  <label>
-								    <input type="checkbox" value="">
+								<div>
+								  <label class="checkbox-inline">
+								    <input id="gold" type="checkbox" checked>
 								    Gold
 								  </label>
-								</div>
-								<div class="checkbox">
-								  <label>
-								    <input type="checkbox" value="">
+								  <label  class="checkbox-inline">
+								    <input id="silver" type="checkbox" checked>
 								    Silver
 								  </label>
-								</div>
-								<div class="checkbox">
-								  <label>
-								    <input type="checkbox" value="">
+								  <label  class="checkbox-inline">
+								    <input id="bronze" type="checkbox" checked>
 								    Bronze
+								  </label>
+									</br>
+									<label  class="checkbox-inline">
+								    <input id="hm" type="checkbox" checked>
+								    Honorable Mention
+								  </label>
+									<label  class="checkbox-inline">
+								    <input id="none" type="checkbox" checked>
+								    None
 								  </label>
 								</div>
 							</div>
-						</div></br></br></br>
+						</div></br>
+						<div class="form-group">
+							<label class="control-label col-sm-4">Category</label>
+							<div class="col-sm-8">
+								<div>
+								  <label class="checkbox-inline">
+								    <input id="sculpture" type="checkbox" checked>
+								    Sculpture
+								  </label>
+								  <label  class="checkbox-inline">
+								    <input id="painting" type="checkbox" checked>
+								    Painting
+								  </label>
+									</br>
+								  <label  class="checkbox-inline">
+								    <input id="literature" type="checkbox" checked>
+								    Literature
+								  </label>
+									<label  class="checkbox-inline">
+								    <input id="unknown" type="checkbox" checked>
+								    Unknown
+								  </label>
+									</br>
+									<label  class="checkbox-inline">
+								    <input id="architecture" type="checkbox" checked>
+								    Architecture
+								  </label>
+									<label  class="checkbox-inline">
+								    <input id="music" type="checkbox" checked>
+								    Music
+								  </label>
+								</div>
+							</div>
+						</div>
+						</br></br></br>
 
 						<div>
 							<div class="form-group">
@@ -61,15 +100,17 @@
 									<button type="button" class="btn btn-default" onclick="reload()">Reload</button>
 								</div>
 							</div>
-						</div></br></br>
+						</div></br>
+						<!--
 						<div>
 							<div class="form-group">
 								<div class="col-sm-2 col-md-offset-8">
-									<!-- <button type="button" class="btn btn-default" onclick="getTestData()">Get Test Data</button> -->
+									<!-- <button type="button" class="btn btn-default" onclick="getTestData()">Get Test Data</button> --
 									<button type="button" class="btn btn-default" onclick="removeArrows()">Clear Map</button>
 								</div>
 							</div>
 						</div></br></br>
+						-->
 					</div>
 
 					<!-- info panel -->
