@@ -14,30 +14,117 @@ var db = mysql.createConnection(config);
 db.connect();
 
 app.use(express.static('static'));
+app.set('view engine', 'ejs'); // set up ejs for templating
 app.listen(8000);
 
 app.get("/countryCounts",function(req, res){
-  var year =    parseInt(req.query.year); //TODO: don't parse in probably
-  var medal =   parseInt(req.query.end);
-  var country = parseInt(req.query.bins);
-  var type = req.query.page;
-  var dataType = req.query.type;
+	var conditions = queryToFilterConditions(req.query);
 
   db.query("select Team as country, count(*) as entries, \
             count(gold) as golds, \
             count(silver) as silvers, \
             count(bronze) as bronzes \
-            from olympic_results where year=? group by Team order by count(*) DESC;",
-            [year],
+            from olympic_results where "+conditions+" group by Team order by count(*) DESC;",
     function(err,rows){
       if(err){
       	console.log(err);
       }else{
-        console.log(rows);
         res.end( JSON.stringify(rows) );
       }
     });
   });
+
+//gets entries (Title, Artist, Category, Award, id) for given filters
+app.get("/getEntries",function(req, res){
+  var country = req.query.country;
+	var conditions = queryToFilterConditions(req.query);
+
+  db.query("select Title as title, Athlete as competitor, personID as artistid,\
+            Medal as award, `General Category` as cat, id from olympic_results where Team=? and " +
+						conditions+";",
+          [country], function(err, rows){
+            if(err){
+            	console.log(err);
+            }else{
+              res.end( JSON.stringify(rows) );
+            }
+          });
+});
+
+function queryToFilterConditions(q){
+	var year =    parseInt(q.year); //TODO: don't parse in probably
+  var medal =   q.medals;
+  var type =    q.type;
+  var dataType = q.type;
+
+	//TODO santize these
+	conditions = "year="+year+" ";
+
+	var awardConditions = [];
+	var typeConditions  = [];
+
+	if(q.gold=="true") awardConditions.push("Rank='1'");
+	if(q.silver=="true") awardConditions.push("Rank='2' OR Rank='2T'");
+	if(q.bronze=="true") awardConditions.push("Rank='3' OR Rank='3T'");
+	if(q.hm=="true") awardConditions.push("Rank='HM'");
+	if(q.none=="true") awardConditions.push("Rank='AC'");
+
+	if(q.literature=="true") typeConditions.push("`General Category`='Literature'");
+	if(q.music=="true") typeConditions.push("`General Category`='Music'");
+	if(q.sculpture=="true") typeConditions.push("`General Category`='Sculpture'");
+	if(q.unknown=="true") typeConditions.push("`General Category`='Unknown'");
+	if(q.painting=="true") typeConditions.push("`General Category`='Painting'");
+	if(q.architecture=="true") typeConditions.push("`General Category`='Architecture'");
+
+	if(awardConditions.length>0){
+		conditions += "and ("+awardConditions.join(" OR ")+") ";
+	}
+
+	if(typeConditions.length>0){
+		conditions += "and ("+awardConditions.join(" OR ")+") ";
+	}
+	return conditions;
+}
+
+//displays a web page for a given entry - ejs?
+app.get("/entry",function(req,res){
+  var id = parseInt(req.query.id);
+  var testURL = "https://s-media-cache-ak0.pinimg.com/originals/c3/d7/7f/c3d77f5f73a4f03041cb854d8dce6b82.jpg";
+  db.query("select Title as title, Athlete as competitor, personID as pid,\
+            Medal as award, `General Category` as gcat, event as speccat from olympic_results where id=?",
+            [id],function(err, rows){
+              if(err){
+              	console.log(err);
+              }else{
+                var r = rows[0];
+                res.render('entry.ejs',{imgurl: testURL, title: r.title, competitor: r.competitor, gencat: r.gcat, speccat: r.speccat, award: r.award, pid: r.pid});
+              }
+            });
+});
+
+//displays a web page for a given artist - ejs
+app.get("/competitor",function(req, res){
+  var artistID = req.query.id;
+  var testURL = "https://aapsa.net/images/staff/placeholder.png";
+  //make a request for this artist's bio and url
+  db.query("select BIO as bio, URL as url from olympic_bios where `ARTIST ID`=?;",
+            [artistID],function(err, rows){
+              if(err){
+              	console.log(err);
+              }else{
+                var bio = rows[0].bio;
+                var url = rows[0].url;
+                //make a query for this artist's works
+                //want to entry name, year, id, award
+                db.query("select Title as title, year, `Host City` as venue, Medal as award, id, \
+                          Athlete as artistName from olympic_results where personID=?;", [artistID],
+                          function(err, rows){
+                            var artistName = rows[0].artistName;
+                            res.render('artist.ejs',{imgurl: testURL, url: url, name: artistName, bio: bio, works: rows});
+                          });
+              }
+            });
+});
 
 app.get("/getart",function(req, res){
   var year =    parseInt(req.query.year); //TODO: don't parse in probably
@@ -59,34 +146,4 @@ app.get("/getart",function(req, res){
       }
     });
   res.end("response");
-
-
-  //things needed:
-  //Title, host city, (General) Category, Medal artist name, NOC(Team), artist bio
-
-  //Sends back an object of
-  //{pieces: [...], artists: [...]}
-  //where pieces are made of [title, url, artistID, countryOfOrigin, year, medal]
-  //and artists are made of  [name, bio, country, artistID] (referenced by artistID though)
-/*
-  database.query("select distinct current_page from reports;",
-    function(err, results){
-      //....
-      res.end( JSON.stringify( pages ) );
-    })*/
-});
-
-app.get("/testart",function(req, res){
-  var pieces = [{title: "Arosa I Placard", url: "http://images.complex.com/complex/image/upload/c_limit,w_680/fl_lossy,pg_1,q_auto/o1sliwrtuiji7yqowzjj.jpg", artistID: "a2", countryOfOrigin: "Switzerland", year: 1936, medal: "gold", gamesCountry: "Berlin, Germany"},
-                {title: "Rugby", url: "https://upload.wikimedia.org/wikipedia/commons/6/61/Rugby_by_Jean_Jacoby.png", artistID: "a1", countryOfOrigin: "Luxembourg", year: 1928, medal: "gold", gamesCountry: "Berlin, Germany"},
-                //{title: "", url: "", artistID: "", countryOfOrigin: "", year: , medal: ""}
-              ]
-  var artists = {'a1':{name: "Jean Jacoby",
-                       bio:"Jean Lucien Nicolas Jacoby was a Luxembourg artist. He won Olympic gold medals in the Olympic art competitions of 1924 and 1928, making him the most successful Olympic artist ever.",
-                       location: "New York City"},
-                 'a2':{name: "Alex Diggelmann",
-                       bio: "Alex Walter Diggelmann was a Swiss graphic artist and book designer best known for his sports posters.[1] Diggelmann who won three medals in the Olympic Games.",
-                       location: "Switzerland"}
-                     };
-  res.end(JSON.stringify({'pieces': pieces, 'artists': artists}));
 });

@@ -1,0 +1,24 @@
+{
+  "name": "artmap",
+  "version": "1.0.0",
+  "description": "A visualizer for Olympic Art Competition data",
+  "main": "server.js",
+  "dependencies": {
+    "express": "^4.15.2"
+  },
+  "devDependencies": {},
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "start": "node server.js"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/ThatcherC/ArtMap.git"
+  },
+  "author": "Thatcher Chamberlin",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/ThatcherC/ArtMap/issues"
+  },
+  "homepage": "https://github.com/ThatcherC/ArtMap#readme"
+}
