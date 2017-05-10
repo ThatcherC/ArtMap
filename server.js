@@ -23,11 +23,38 @@ app.get("/countryCounts",function(req, res){
   var type =    req.query.type;
   var dataType = req.query.type;
 
+	//TODO santize these
+	conditions = "year="+year+" ";
+
+	var awardConditions = [];
+	var typeConditions  = [];
+
+	if(req.query.gold=="true") awardConditions.push("Rank='1'");
+	if(req.query.silver=="true") awardConditions.push("Rank='2' OR Rank='2T'");
+	if(req.query.bronze=="true") awardConditions.push("Rank='3' OR Rank='3T'");
+	if(req.query.hm=="true") awardConditions.push("Rank='HM'");
+	if(req.query.none=="true") awardConditions.push("Rank='AC'");
+
+	if(req.query.literature=="true") typeConditions.push("`General Category`='Literature'");
+	if(req.query.music=="true") typeConditions.push("`General Category`='Music'");
+	if(req.query.sculpture=="true") typeConditions.push("`General Category`='Sculpture'");
+	if(req.query.unknown=="true") typeConditions.push("`General Category`='Unknown'");
+	if(req.query.painting=="true") typeConditions.push("`General Category`='Painting'");
+	if(req.query.architecture=="true") typeConditions.push("`General Category`='Architecture'");
+
+	if(awardConditions.length>0){
+		conditions += "and ("+awardConditions.join(" OR ")+") ";
+	}
+
+	if(typeConditions.length>0){
+		conditions += "and ("+awardConditions.join(" OR ")+") ";
+	}
+
   db.query("select Team as country, count(*) as entries, \
             count(gold) as golds, \
             count(silver) as silvers, \
             count(bronze) as bronzes \
-            from olympic_results where year=? group by Team order by count(*) DESC;",
+            from olympic_results where "+conditions+" group by Team order by count(*) DESC;",
             [year],
     function(err,rows){
       if(err){

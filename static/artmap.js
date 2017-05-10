@@ -44,11 +44,20 @@ function updateYear(){
   yearLabel.innerHTML="Year: "+yearSlider.value;
 }
 
+const boxIDs = ["gold","silver","bronze","hm","none","sculpture","painting",
+                "literature", "unknown", "architecture", "music"];
+
 function reload(){
   //code to request new data will go here
   console.log("Reloading...");
   var year = yearSlider.value;
-  $.ajax({url: "/countryCounts?year="+year,
+  var longURL = "/countryCounts?year="+year;
+  for(var i in boxIDs){
+    var value = document.getElementById(boxIDs[i]).checked;
+    longURL += "&"+boxIDs[i]+"="+value;
+  }
+  console.log(longURL);
+  $.ajax({url: longURL,
           success: function(result){
             //displayData( JSON.parse(result) );
             //console.log(result);
@@ -245,7 +254,7 @@ function removeArrows(){
   arrows = [];
 }
 
-var hostLookup  = {1912: {city: "Stockholm", location: {lat:59.323469, lng:18.302331}},
+const hostLookup  = {1912: {city: "Stockholm", location: {lat:59.323469, lng:18.302331}},
                    1916: {city: "No Olympics this year (WWI)", location: {lat:0,lng:0}},
                    1920: {city: "Antwerp", location: {lat:51.244400,lng:4.403144}},
                    1924: {city: "Paris", location: {lat:48.875414,lng:2.418237}},
@@ -256,7 +265,7 @@ var hostLookup  = {1912: {city: "Stockholm", location: {lat:59.323469, lng:18.30
                    1944: {city: "No Olympics this year (WWII)", location: {lat:0,lng:0}},
                    1948: {city: "London", location: {lat: 51.561475, lng:-0.122371}}};
 
-var placeLookup =  {"Germany"        : {lat: 52.30, lng: 	13.25},
+const placeLookup =  {"Germany"        : {lat: 52.30, lng: 	13.25},
                     "Italy"          : {lat: 41.54, lng: 	12.29},
                     "France"         : {lat: 48.50, lng: 2.20},
                     "United States"  : {lat: 39.91, lng: -77.02},
