@@ -81,8 +81,11 @@ function queryToFilterConditions(q){
 	}
 
 	if(typeConditions.length>0){
-		conditions += "and ("+awardConditions.join(" OR ")+") ";
+		conditions += "and ("+typeConditions.join(" OR ")+") ";
+	}else{
+		conditions += "and `General Category`='asf'"; //necessary to make sure we filter out everything if all filters are deselected
 	}
+
 	return conditions;
 }
 
@@ -90,7 +93,7 @@ function queryToFilterConditions(q){
 app.get("/entry",function(req,res){
   var id = parseInt(req.query.id);
   var testURL = "https://s-media-cache-ak0.pinimg.com/originals/c3/d7/7f/c3d77f5f73a4f03041cb854d8dce6b82.jpg";
-  db.query("select Title as title, Athlete as competitor, personID as pid, ImageURL\
+  db.query("select Title as title, Athlete as competitor, personID as pid, ImageURL,\
             Medal as award, `General Category` as gcat, event as speccat from olympic_results where id=?",
             [id],function(err, rows){
               if(err){
