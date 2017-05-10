@@ -18,44 +18,13 @@ app.set('view engine', 'ejs'); // set up ejs for templating
 app.listen(8000);
 
 app.get("/countryCounts",function(req, res){
-  var year =    parseInt(req.query.year); //TODO: don't parse in probably
-  var medal =   req.query.medals;
-  var type =    req.query.type;
-  var dataType = req.query.type;
-
-	//TODO santize these
-	conditions = "year="+year+" ";
-
-	var awardConditions = [];
-	var typeConditions  = [];
-
-	if(req.query.gold=="true") awardConditions.push("Rank='1'");
-	if(req.query.silver=="true") awardConditions.push("Rank='2' OR Rank='2T'");
-	if(req.query.bronze=="true") awardConditions.push("Rank='3' OR Rank='3T'");
-	if(req.query.hm=="true") awardConditions.push("Rank='HM'");
-	if(req.query.none=="true") awardConditions.push("Rank='AC'");
-
-	if(req.query.literature=="true") typeConditions.push("`General Category`='Literature'");
-	if(req.query.music=="true") typeConditions.push("`General Category`='Music'");
-	if(req.query.sculpture=="true") typeConditions.push("`General Category`='Sculpture'");
-	if(req.query.unknown=="true") typeConditions.push("`General Category`='Unknown'");
-	if(req.query.painting=="true") typeConditions.push("`General Category`='Painting'");
-	if(req.query.architecture=="true") typeConditions.push("`General Category`='Architecture'");
-
-	if(awardConditions.length>0){
-		conditions += "and ("+awardConditions.join(" OR ")+") ";
-	}
-
-	if(typeConditions.length>0){
-		conditions += "and ("+awardConditions.join(" OR ")+") ";
-	}
+	var conditions = queryToFilterConditions(req.query);
 
   db.query("select Team as country, count(*) as entries, \
             count(gold) as golds, \
             count(silver) as silvers, \
             count(bronze) as bronzes \
             from olympic_results where "+conditions+" group by Team order by count(*) DESC;",
-            [year],
     function(err,rows){
       if(err){
       	console.log(err);
@@ -67,12 +36,13 @@ app.get("/countryCounts",function(req, res){
 
 //gets entries (Title, Artist, Category, Award, id) for given filters
 app.get("/getEntries",function(req, res){
-  var year = parseInt(req.query.year);
   var country = req.query.country;
+	var conditions = queryToFilterConditions(req.query);
 
   db.query("select Title as title, Athlete as competitor, personID as artistid,\
-            Medal as award, `General Category` as cat, id from olympic_results where Team=? and year=?",
-          [country, year], function(err, rows){
+            Medal as award, `General Category` as cat, id from olympic_results where Team=? and " +
+						conditions+";",
+          [country], function(err, rows){
             if(err){
             	console.log(err);
             }else{
@@ -80,6 +50,41 @@ app.get("/getEntries",function(req, res){
             }
           });
 });
+
+function queryToFilterConditions(q){
+	var year =    parseInt(q.year); //TODO: don't parse in probably
+  var medal =   q.medals;
+  var type =    q.type;
+  var dataType = q.type;
+
+	//TODO santize these
+	conditions = "year="+year+" ";
+
+	var awardConditions = [];
+	var typeConditions  = [];
+
+	if(q.gold=="true") awardConditions.push("Rank='1'");
+	if(q.silver=="true") awardConditions.push("Rank='2' OR Rank='2T'");
+	if(q.bronze=="true") awardConditions.push("Rank='3' OR Rank='3T'");
+	if(q.hm=="true") awardConditions.push("Rank='HM'");
+	if(q.none=="true") awardConditions.push("Rank='AC'");
+
+	if(q.literature=="true") typeConditions.push("`General Category`='Literature'");
+	if(q.music=="true") typeConditions.push("`General Category`='Music'");
+	if(q.sculpture=="true") typeConditions.push("`General Category`='Sculpture'");
+	if(q.unknown=="true") typeConditions.push("`General Category`='Unknown'");
+	if(q.painting=="true") typeConditions.push("`General Category`='Painting'");
+	if(q.architecture=="true") typeConditions.push("`General Category`='Architecture'");
+
+	if(awardConditions.length>0){
+		conditions += "and ("+awardConditions.join(" OR ")+") ";
+	}
+
+	if(typeConditions.length>0){
+		conditions += "and ("+awardConditions.join(" OR ")+") ";
+	}
+	return conditions;
+}
 
 //displays a web page for a given entry - ejs?
 app.get("/entry",function(req,res){

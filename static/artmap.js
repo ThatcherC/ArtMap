@@ -47,16 +47,21 @@ function updateYear(){
 const boxIDs = ["gold","silver","bronze","hm","none","sculpture","painting",
                 "literature", "unknown", "architecture", "music"];
 
-function reload(){
-  //code to request new data will go here
-  console.log("Reloading...");
+function stringOfFilters(){
   var year = yearSlider.value;
-  var longURL = "/countryCounts?year="+year;
+
+  var longURL = "year="+year;
   for(var i in boxIDs){
     var value = document.getElementById(boxIDs[i]).checked;
     longURL += "&"+boxIDs[i]+"="+value;
   }
-  console.log(longURL);
+  return longURL
+}
+
+function reload(){
+  //code to request new data will go here
+  console.log("Reloading...");
+  const longURL = "/countryCounts?"+stringOfFilters();
   $.ajax({url: longURL,
           success: function(result){
             //displayData( JSON.parse(result) );
@@ -67,9 +72,9 @@ function reload(){
 }
 
 function showCountry(country){
-  var year = yearSlider.value;
+  const longURL = "/getEntries?country="+country+"&"+stringOfFilters();
 
-  $.ajax({url: "/getEntries?year="+year+"&country="+country,
+  $.ajax({url: longURL,
           success: function(result){
             dataForOneCountry = JSON.parse(result)
             displayOneCountryText( dataForOneCountry, country);
