@@ -7,7 +7,7 @@ var config = {
 		'host':'localhost',
 		'user':'root',
 		'password':'abso1utehe1icopter',    //may need to change this TODO
-		'database':'olympics'
+		'database':'olympics2'
 	};
 
 var db = mysql.createConnection(config);
@@ -90,14 +90,14 @@ function queryToFilterConditions(q){
 app.get("/entry",function(req,res){
   var id = parseInt(req.query.id);
   var testURL = "https://s-media-cache-ak0.pinimg.com/originals/c3/d7/7f/c3d77f5f73a4f03041cb854d8dce6b82.jpg";
-  db.query("select Title as title, Athlete as competitor, personID as pid,\
+  db.query("select Title as title, Athlete as competitor, personID as pid, ImageURL\
             Medal as award, `General Category` as gcat, event as speccat from olympic_results where id=?",
             [id],function(err, rows){
               if(err){
               	console.log(err);
               }else{
                 var r = rows[0];
-                res.render('entry.ejs',{imgurl: testURL, title: r.title, competitor: r.competitor, gencat: r.gcat, speccat: r.speccat, award: r.award, pid: r.pid});
+                res.render('entry.ejs',{imgurl: r.ImageURL, title: r.title, competitor: r.competitor, gencat: r.gcat, speccat: r.speccat, award: r.award, pid: r.pid});
               }
             });
 });
