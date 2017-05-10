@@ -8,6 +8,9 @@ var categorySelector;
 
 var dataForAllCountries;
 
+var currentInfoWindowData;
+var infoWindow;
+
 function initializeMap(){
   console.log("Initializing map");
 
@@ -104,11 +107,50 @@ function displayCountryCount(data){
         title: data[i].country
     });
 
+    marker.addListener('click',function(d){
+      return function(){
+        toggleInfoWindow(d);
+      }}(data[i]));
+
     marker.setMap(map);
     path.setMap(map);
     arrows.push(path);
     arrows.push(marker);
   }
+}
+
+function toggleInfoWindow(data){
+  if(JSON.stringify(data)!=JSON.stringify(currentInfoWindowData)){
+    if(infoWindow){
+      infoWindow.close();
+    }
+    currentInfoWindowData = data;
+
+    var name = data.country;
+    var golds = data.golds;
+
+    var content = '<div id="content">'+
+      '<div id="siteNotice">'+
+      '</div>'+
+      '<h3 id="firstHeading" class="firstHeading">'+data.country+'</h3>'+
+      '<div id="bodyContent">'+
+      '<p><b>Golds:</b> '+data.golds+'</br>'+
+      '<b>SIlvers:</b> '+data.silvers+'</br>'+
+      '<b>Bronzes:</b> '+data.bronzes+'</br>'+
+      '<b>Total:</b> '+data.entries+'</br>'+
+
+      '</p></div></div>';
+
+    infoWindow = new google.maps.InfoWindow({
+      content: content,
+      position: placeLookup[data.country]
+    });
+    infoWindow.open(map);
+  }else{
+    console.log("Closing window");
+    infoWindow.close();
+  }
+
 }
 
 //TODO also kinda poorly named
@@ -203,6 +245,8 @@ function removeArrows(){
   arrows = [];
 }
 
+var hostLookup  = {1912: , 1920: 1924: , 1928: , 1932: , 1936: , 1948: };
+
 var placeLookup =  {"Germany"        : {lat: 52.30, lng: 	13.25},
                     "Italy"          : {lat: 41.54, lng: 	12.29},
                     "France"         : {lat: 48.50, lng: 2.20},
@@ -230,7 +274,7 @@ var placeLookup =  {"Germany"        : {lat: 52.30, lng: 	13.25},
                     "Finland"        : {lat: 60.15, lng: 25.03},
                     "Brazil"         : {lat: -15.47, lng: -47.55},
                     "Uruguay"        : {lat: -34.50, lng: -56.11},
-                    "Australia"      : {lat: 35.15, lng: 149.08},
+                    "Australia"      : {lat: -35.15, lng: 149.08},
                     "Egypt"          : {lat: 30.01, lng: 31.14},
                     "Austria"        : {lat: 48.12, lng: 16.22},
                     "Latvia"         : {lat: 56.53, lng: 24.08},
