@@ -87,7 +87,7 @@ function displayCountryCount(data){
 
   for(var i = 0; i < data.length; i++){
     var start = placeLookup[data[i].country];
-    var end = {lat: 52.30, lng: 	13.25};      //TODO year city look up
+    var end = hostLookup[yearSlider.value].location;
 
     var pathCoords = [start, end];
 
@@ -155,7 +155,7 @@ function toggleInfoWindow(data){
 
 //TODO also kinda poorly named
 function displayCountryText(data){
-  var text = "<big>"+yearSlider.value+" Results</big></br>";
+  var text = "<big>"+yearSlider.value+" Results - "+hostLookup[yearSlider.value].city+"</big></br>";
   text += "<div style='height:200px; overflow: auto;' >";
   text += "<table class='table'>"
   text += "<tr><th>Country</th><th>Gold</th><th>Silver</th><th>Bronze</th><th>Total Entries</th></tr>";
@@ -245,15 +245,24 @@ function removeArrows(){
   arrows = [];
 }
 
-var hostLookup  = {1912: , 1920: 1924: , 1928: , 1932: , 1936: , 1948: };
+var hostLookup  = {1912: {city: "Stockholm", location: {lat:59.323469, lng:18.302331}},
+                   1916: {city: "No Olympics this year (WWI)", location: {lat:0,lng:0}},
+                   1920: {city: "Antwerp", location: {lat:51.244400,lng:4.403144}},
+                   1924: {city: "Paris", location: {lat:48.875414,lng:2.418237}},
+                   1928: {city: "Amsterdam", location: {lat:52.392800,lng:4.781977}},
+                   1932: {city: "Los Angeles", location: {lat:34.077439,lng:-118.233604}},
+                   1936: {city: "Berlin", location: {lat:52.509176,lng:13.446451}},
+                   1940: {city: "No Olympics this year (WWII)", location: {lat:0,lng:0}},
+                   1944: {city: "No Olympics this year (WWII)", location: {lat:0,lng:0}},
+                   1948: {city: "London", location: {lat: 51.561475, lng:-0.122371}}};
 
 var placeLookup =  {"Germany"        : {lat: 52.30, lng: 	13.25},
                     "Italy"          : {lat: 41.54, lng: 	12.29},
                     "France"         : {lat: 48.50, lng: 2.20},
                     "United States"  : {lat: 39.91, lng: -77.02},
-                    "Bohemia"       :{lat: 0, lng: 0},        //TODO fix
+                    "Bohemia"       :{lat: 50.098465, lng: 13.694741},
                     "Canada"         : {lat: 45.27, lng: -75.42},
-                    "Russia"        : {lat: 0, lng: 0},        //TODO fix
+                    "Russia"        : {lat: 62.883011, lng: 91.801622},
                     "Poland"         : {lat: 52.13, lng: 21.00},
                     "Great Britain"  : {lat: 51.36, lng: 0.05},
                     "Switzerland"    : {lat: 46.57, lng: 7.28},
@@ -263,11 +272,11 @@ var placeLookup =  {"Germany"        : {lat: 52.30, lng: 	13.25},
                     "Hungary"        : {lat: 47.29, lng: 19.05},
                     "Netherlands"    : {lat: 52.23, lng: 4.54},
                     "Denmark"        : {lat: 55.41, lng: 12.34},
-                    "Monaco"        : {lat: 0, lng: 0},        //TODO fix
+                    "Monaco"        : {lat: 43.739438, lng: 7.426046},
                     "Yugoslavia"     : {lat: 44.50, lng: 20.37},
                     "South Africa"   : {lat: -25.44, lng: 28.12},
                     "Luxembourg"     : {lat: 49.37, lng: 6.09},
-                    "Czechoslovakia": {lat: 0, lng: 0},        //TODO fix
+                    "Czechoslovakia": {lat: 50.060, lng: 14.444},
                     "Spain"          : {lat: 40.25, lng: 3.45},
                     "Greece"         : {lat: 37.58, lng: 23.46},
                     "Ireland"        : {lat: 53.21, lng: 6.15},
@@ -291,7 +300,7 @@ var placeLookup =  {"Germany"        : {lat: 52.30, lng: 	13.25},
                     "Colombia"       : {lat: 4.34, lng:  -74.00},
                     "Cuba"           : {lat: 23.08, lng: -82.22},
                     "Haiti"          : {lat: 18.40, lng: -72.20},
-                    "Japan"          : {lat: 0, lng: 0},        //TODO fix
+                    "Japan"          : {lat: 36.383534, lng: 138.699676},
                     "Bolivia"        : {lat: -16.20, lng: -68.10},
                     "China"          : {lat: 39.55, lng: 116.20},
                     "Iceland"        : {lat: 64.10, lng: 21.57},
