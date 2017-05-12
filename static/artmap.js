@@ -22,7 +22,7 @@ function initializeMap(){
   var mapOptions = {
     center: mapCenter,
     zoom: 4,
-    minZoom: 3,
+    minZoom: 2,
     maxZoom: 13,
     streetViewControl: false,
   };
