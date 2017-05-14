@@ -1,3 +1,13 @@
+(1) Cities -> Countries -> Host city
+  - Geocoding task
+(2) Quantity with color - gray scale
+(3) Set up server
+  - gcloud compute --project "artmap-165517" ssh --zone "us-central1-c" "artmap-server"
+  - TODO - set up nginx, forever
+(4) Pop up "bubble" for each year's info
+
+----------------------------
+
 alter results table so it has a gold, silver, and bronze column
 
 -------------
