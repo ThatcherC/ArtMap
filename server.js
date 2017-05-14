@@ -13,6 +13,10 @@ var config = {
 var db = mysql.createConnection(config);
 db.connect();
 
+app.get('/', function(req, res) {
+    res.sendFile(__dirname+"/static/intro.html");
+});
+
 app.use(express.static('static'));
 app.set('view engine', 'ejs'); // set up ejs for templating
 app.listen(8000);
