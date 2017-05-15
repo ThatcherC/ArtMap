@@ -90,18 +90,31 @@ function displayCountryCount(data){
   var minPathWeight = 2; //?
   var totalEntries = data.reduce(function(acc, cur, i, a){return acc+cur.entries}, 0);
   var fewestEntries = data.reduce(( acc, cur ) => Math.min( acc, cur.entries ), 100000);
+  var mostEntries = data.reduce(( acc, cur ) => Math.max( acc, cur.entries ), -1);
+
+  const minGray = 200;
+  const maxGray = 10;
+
+  const scale = (maxGray-minGray)/(mostEntries-fewestEntries);
 
   for(var i = 0; i < data.length; i++){
     var start = placeLookup[data[i].country];
     var end = hostLookup[yearSlider.value].location;
 
     var pathCoords = [start, end];
+    const grayness = Math.round((data[i].entries-fewestEntries)*scale+minGray);
+    const hex = grayness.toString(16);
+    const digits = "00".substring(0, 2 - hex.length) + hex;
+    const colorString = "#"+digits+digits+digits;
+    console.log(grayness)
+
+    console.log(colorString);
 
     path = new google.maps.Polyline({
       path: pathCoords,
-      strokeColor: '#AAAAAA',
+      strokeColor: colorString,
       strokeOpacity: 1.0,
-      strokeWeight: 2,//2*Math.log(data[i].entries/fewestEntries),
+      strokeWeight: 4,//2*Math.log(data[i].entries/fewestEntries),
       //from https://developers.google.com/maps/documentation/javascript/examples/overlay-symbol-arrow
       icons: [{
         icon: lineSymbol,

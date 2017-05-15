@@ -1,10 +1,29 @@
+Geocoding:
+
+Ambiguities:
+------------
+Barrio San José, Spain,   7
+Hiroshima,                2
+Essex City,               5
+Esrom,                    2
+Kolstrup,                 2
+Altona,                   2
+Bogna,                    2
+Palisades,                2
+Graz-Kroisbach,           2
+Chelsea,                  6           
+Unknown,                  2
+Nevern Mansions, London   2
+
+-----------------------------
+
 (1) Cities -> Countries -> Host city
   - Geocoding task
 (2) Quantity with color - gray scale
 (3) Set up server
   - gcloud compute --project "artmap-165517" ssh --zone "us-central1-c" "artmap-server"
-  - TODO - set up nginx, forever
 (4) Pop up "bubble" for each year's info
+(5) Full metadata on autogenned pages
 
 ----------------------------
 

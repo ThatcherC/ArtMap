@@ -2,6 +2,9 @@
 var express = require('express');
 var mysql = 		require('mysql');
 var app = express();
+var cityLookup = require("./cityLookup.js").cityLookup;
+
+console.log(cityLookup["Tábor"]);
 
 var config = {
 		'host':'localhost',
@@ -21,6 +24,7 @@ app.use(express.static('static'));
 app.set('view engine', 'ejs'); // set up ejs for templating
 app.listen(8000);
 
+//returns each country's medal count
 app.get("/countryCounts",function(req, res){
 	var conditions = queryToFilterConditions(req.query);
 
@@ -38,18 +42,21 @@ app.get("/countryCounts",function(req, res){
     });
   });
 
-//gets entries (Title, Artist, Category, Award, id) for given filters
+//gets entries (Title, Artist, Category, Award, City, id) for given filters
 app.get("/getEntries",function(req, res){
   var country = req.query.country;
 	var conditions = queryToFilterConditions(req.query);
 
-  db.query("select Title as title, Athlete as competitor, personID as artistid,\
+  db.query("select Title as title, Athlete as competitor, personID as artistid, City as city, \
             Medal as award, `General Category` as cat, id from olympic_results where Team=? and " +
 						conditions+";",
           [country], function(err, rows){
             if(err){
             	console.log(err);
             }else{
+							for(var i = 0; i<rows.length; i++){
+								rows[i]['coords'] = cityLookup[rows[i].city];
+							}
               res.end( JSON.stringify(rows) );
             }
           });
