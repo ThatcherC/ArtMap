@@ -274,9 +274,9 @@ const hostLookup  = {1912: {city: "Stockholm", location: {lat:59.323469, lng:18.
                    1944: {city: "No Olympics this year (WWII)", location: {lat:0,lng:0}},
                    1948: {city: "London", location: {lat: 51.561475, lng:-0.122371}}};
 
-const placeLookup =  {"Germany"        : {lat: 50.539157, lng: 	10.038070},
+const placeLookup =  {"Germany"        : {lat: 51.039157, lng: 	10.038070},
                     "Italy"          : {lat: 41.54, lng: 	12.29},
-                    "France"         : {lat: 48.50, lng: 2.20},
+                    "France"         : {lat: 46.57, lng: 2.20},
                     "United States"  : {lat: 40.431545, lng: -97.162319},
                     "Bohemia"       :{lat: 50.098465, lng: 13.694741},
                     "Canada"         : {lat: 56.958785, lng: -102.603963},
