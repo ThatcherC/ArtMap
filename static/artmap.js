@@ -274,15 +274,15 @@ const hostLookup  = {1912: {city: "Stockholm", location: {lat:59.323469, lng:18.
                    1944: {city: "No Olympics this year (WWII)", location: {lat:0,lng:0}},
                    1948: {city: "London", location: {lat: 51.561475, lng:-0.122371}}};
 
-const placeLookup =  {"Germany"        : {lat: 52.30, lng: 	13.25},
+const placeLookup =  {"Germany"        : {lat: 50.539157, lng: 	10.038070},
                     "Italy"          : {lat: 41.54, lng: 	12.29},
                     "France"         : {lat: 48.50, lng: 2.20},
-                    "United States"  : {lat: 39.91, lng: -77.02},
+                    "United States"  : {lat: 40.431545, lng: -97.162319},
                     "Bohemia"       :{lat: 50.098465, lng: 13.694741},
-                    "Canada"         : {lat: 45.27, lng: -75.42},
+                    "Canada"         : {lat: 56.958785, lng: -102.603963},
                     "Russia"        : {lat: 62.883011, lng: 91.801622},
                     "Poland"         : {lat: 52.13, lng: 21.00},
-                    "Great Britain"  : {lat: 51.36, lng: 0.05},
+                    "Great Britain"  : {lat: 54.000065, lng: -1.933547},
                     "Switzerland"    : {lat: 46.57, lng: 7.28},
                     "Unknown"       : {lat: 0, lng: 0},        //TODO fix
                     "Belgium"        : {lat: 50.51, lng: 4.21},
