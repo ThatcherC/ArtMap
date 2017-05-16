@@ -7,11 +7,15 @@ body{
 	font-family: Georgia;
 	color: #fff;
 	font-size: 14px;
-	background: #222;
+	background: white;
+}
+
+p{
+	color: black;
 }
 
 a {
-	color: #ffffcc;
+	color: black;
 	text-decoration: none;
 	-webkit-transition: 0.5s;
 	-moz-transition: 0.5s;
@@ -26,8 +30,8 @@ a.selected, a.active {
 
 h1,h2,h4,h5,h6 {
 	text-align: center;
-	color: #ffcc00;
-	text-shadow: #000 1px 1px 2px;
+	color: black;
+	/*text-shadow: #000 1px 1px 2px;*/
 	margin-bottom: 5px;
 }
 	h1 {
@@ -37,7 +41,7 @@ h1,h2,h4,h5,h6 {
 		font-size: 14px;
 	}
 	h5{
-		color: white;
+		color: black;
 	}
 	.sociales {
 		text-align: center;
@@ -46,17 +50,19 @@ h1,h2,h4,h5,h6 {
 
 #timeline {
 	width: 1000px;
-	height: 1500px;
+	height: 700px;
 	overflow: hidden;
 	margin: 20px auto;
 	position: relative;
 	background: url('http://www.csslab.cl/ejemplos/timelinr/latest/images/dot.gif') 3px top repeat-y;
+	color: black;
 }
 #dates {
 	width: 100px;
 	height: 700px;
 	overflow: hidden;
 	float: left;
+	color: black;
 }
 #dates li {
 	list-style: none;
@@ -66,17 +72,20 @@ h1,h2,h4,h5,h6 {
 	font-size: 24px;
 	padding-left: 10px;
 	background: url('http://www.csslab.cl/ejemplos/timelinr/latest/images/biggerdot.png') left center no-repeat;
+	color: black;
 }
 #dates a {
 	line-height: 38px;
 	padding-bottom: 10px;
+	color: black;
 }
 #dates .selected {
 	font-size: 24px;
+	color: black;
 }
 		
 #issues {
-	width: 800px;
+	width: 900px;
 	height: 1000px;
 	overflow: hidden;
 }	
@@ -85,6 +94,7 @@ h1,h2,h4,h5,h6 {
 	height: 1000px;
 	list-style: none;
     text-align: center;
+
 
 }
 
@@ -105,7 +115,7 @@ h1,h2,h4,h5,h6 {
 	-o-transform: scale(1.1,1.1);
 	-ms-transform: scale(1.1,1.1);
 	transform: scale(1.1,1.1);
-	float: left;
+	float: right;
 	padding-right: 30px;
 	padding-bottom: 30px;
 	display: block;
@@ -114,31 +124,31 @@ h1,h2,h4,h5,h6 {
 }
 
 #issues li h1 {
-	color: #ffcc00;
+	color: black;
 	font-size: 24px;
 	text-align: right;
-	text-shadow: #000 1px 1px 2px;
+	/*text-shadow: #000 1px 1px 2px;*/
 }
 
 #issues li h2{
-	color: white;
+	color: black;
 	font-size: 18px;
 	text-align: right;
-	text-shadow: #000 1px 1px 2px;
+	/*text-shadow: #000 1px 1px 2px;*/
 }
 
 #issues li h3{
-	color: white;
+	color: black;
 	font-size: 14px;
 	text-align: right;
-	text-shadow: #000 1px 1px 2px;
+	/*text-shadow: #000 1px 1px 2px;*/
 }
 
 #issues li h4 {
-	color: #ffcc00;
+	color: black;
 	font-size: 12px;
 	text-align: right;
-	text-shadow: #000 1px 1px 2px;
+	/*text-shadow: #000 1px 1px 2px;*/
 }
 
 #issues li p {
@@ -146,6 +156,96 @@ h1,h2,h4,h5,h6 {
 	margin: 10px 20px;
 	font-weight: normal;
 	line-height: 22px;
-	text-shadow: #000 1px 1px 2px;
+	/*text-shadow: #000 1px 1px 2px;*/
 	text-align: right;
 }
+
+.box1{
+border: 8px solid black;
+padding: 5px;
+font: 24px/36px sans-serif;
+width: 400px;
+height: 200px;
+overflow: scroll;
+position: relative;
+top:-100px; 
+}
+
+::-webkit-scrollbar {
+width: 12px;
+height: 12px;
+}
+
+::-webkit-scrollbar-track {
+border: 1px solid black;
+border-radius: 10px;
+}
+
+::-webkit-scrollbar-thumb {
+background: black;  
+border-radius: 20px;
+}
+
+::-webkit-scrollbar-thumb:hover {
+background: black;  
+}
+
+/* Popup container - can be anything you want */
+.popup1 {
+    position: relative;
+    display: inline-block;
+    cursor: pointer;
+    -webkit-user-select: none;
+    -moz-user-select: none;
+    -ms-user-select: none;
+    user-select: none;
+}
+
+/* The actual popup */
+.popup1 .popuptext1 {
+    visibility: hidden;
+    width: 160px;
+    background-color: #555;
+    color: #fff;
+    text-align: center;
+    border-radius: 6px;
+    padding: 8px 0;
+    position: absolute;
+    z-index: 1;
+    bottom: 125%;
+    left: 50%;
+    margin-left: -80px;
+}
+
+/.tooltip {
+    position: relative;
+    display: inline-block;
+    border-bottom: 1px dotted black;
+}
+
+.tooltip .tooltiptext {
+    visibility: hidden;
+    width: 120px;
+    background-color: black;
+    color: #fff;
+    text-align: center;
+    border-radius: 6px;
+    padding: 5px 0;
+
+    /* Position the tooltip */
+    position: absolute;
+    z-index: 1;
+}
+
+.tooltip:hover .tooltiptext {
+    visibility: visible;
+}
+
+
+
+
+
+
+
+
+
