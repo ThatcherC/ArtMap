@@ -17,7 +17,7 @@ function initializeMap(){
 
   mapCenter = new google.maps.LatLng(50.078725, 14.367406);
   lineSymbol = {
-   path: google.maps.SymbolPath.FORWARD_CLOSED_ARROW
+   path: google.maps.SymbolPath.CIRCLE
   };
 
   var mapOptions = {
@@ -108,7 +108,6 @@ function displayAllCountryData(data){
     const hex = grayness.toString(16);
     const digits = "00".substring(0, 2 - hex.length) + hex;
     const colorString = "#"+digits+digits+digits;
-    console.log(colorString);
 
     path = new google.maps.Polyline({
       path: pathCoords,
@@ -118,23 +117,23 @@ function displayAllCountryData(data){
       //from https://developers.google.com/maps/documentation/javascript/examples/overlay-symbol-arrow
       icons: [{
         icon: lineSymbol,
-        offset: '100%'
+        offset: '0%'
       }]
     });
-    var marker = new google.maps.Marker({
+    /*var marker = new google.maps.Marker({
         position: start,
         title: data[i].country
-    });
+    });*/
 
-    marker.addListener('click',function(d){
+    path.addListener('click',function(d){
       return function(){
         toggleInfoWindow(d);
       }}(data[i]));
 
-    marker.setMap(map);
+    //marker.setMap(map);
     path.setMap(map);
     arrows.push(path);
-    arrows.push(marker);
+    //arrows.push(marker);
   }
 }
 
