@@ -39,10 +39,12 @@ function initializeMap(){
   yearLabel = document.getElementById("yearLabel");
   categorySelector = document.getElementById("category")
   infoPanel = document.getElementById("infoWindow");
+  reload();
 }
 
 function updateYear(){
   yearLabel.innerHTML="Year: "+yearSlider.value;
+  reload();
 }
 
 const boxIDs = ["gold","silver","bronze","hm","none","sculpture","painting",

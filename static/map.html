@@ -24,7 +24,7 @@
 					<div class="well">
 						<!-- Year selector -->
 						<div class="form-group">
-							<label class="control-label col-sm-4" id="yearLabel">Year</label>
+							<label class="control-label col-sm-4" id="yearLabel">Year: 1912</label>
 							<div class="col-sm-6">
 								<input id="yearSlider" type="range" min="1912" max="1948" step="4" value="1912" onchange="updateYear()">
 							</div>
@@ -36,24 +36,24 @@
 							<div class="col-sm-8">
 								<div>
 								  <label class="checkbox-inline">
-								    <input id="gold" type="checkbox" checked>
+								    <input id="gold" type="checkbox" checked onchange="reload()">
 								    Gold
 								  </label>
 								  <label  class="checkbox-inline">
-								    <input id="silver" type="checkbox" checked>
+								    <input id="silver" type="checkbox" checked onchange="reload()">
 								    Silver
 								  </label>
 								  <label  class="checkbox-inline">
-								    <input id="bronze" type="checkbox" checked>
+								    <input id="bronze" type="checkbox" checked onchange="reload()">
 								    Bronze
 								  </label>
 									</br>
 									<label  class="checkbox-inline">
-								    <input id="hm" type="checkbox" checked>
+								    <input id="hm" type="checkbox" checked onchange="reload()">
 								    Honorable Mention
 								  </label>
 									<label  class="checkbox-inline">
-								    <input id="none" type="checkbox" checked>
+								    <input id="none" type="checkbox" checked onchange="reload()">
 								    None
 								  </label>
 								</div>
@@ -64,29 +64,29 @@
 							<div class="col-sm-8">
 								<div>
 								  <label class="checkbox-inline">
-								    <input id="sculpture" type="checkbox" checked>
+								    <input id="sculpture" type="checkbox" checked onchange="reload()">
 								    Sculpture
 								  </label>
 								  <label  class="checkbox-inline">
-								    <input id="painting" type="checkbox" checked>
+								    <input id="painting" type="checkbox" checked onchange="reload()">
 								    Painting
 								  </label>
 									</br>
 								  <label  class="checkbox-inline">
-								    <input id="literature" type="checkbox" checked>
+								    <input id="literature" type="checkbox" checked onchange="reload()">
 								    Literature
 								  </label>
 									<label  class="checkbox-inline">
-								    <input id="unknown" type="checkbox" checked>
+								    <input id="unknown" type="checkbox" checked onchange="reload()">
 								    Unknown
 								  </label>
 									</br>
 									<label  class="checkbox-inline">
-								    <input id="architecture" type="checkbox" checked>
+								    <input id="architecture" type="checkbox" checked onchange="reload()">
 								    Architecture
 								  </label>
 									<label  class="checkbox-inline">
-								    <input id="music" type="checkbox" checked>
+								    <input id="music" type="checkbox" checked onchange="reload()">
 								    Music
 								  </label>
 								</div>
