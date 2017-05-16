@@ -18,7 +18,12 @@
 
 				<!-- Filter and info section -->
 				<div class="col-md-5" id="controlbox">
-					<center><h1>Olympic Arts</h1></center>
+					<div class="col-sm-6 col-sm-offset-3">
+						<center><h1>Olympic Arts</h1></center>
+					</div>
+					<div class="col-sm-3">
+						</br><a class="btn btn-primary btn-lg" href="/" role="button">Main</a>
+					</div>
 					<!-- <center><i>Additional filters will go here</i></center>
 					control panel -->
 					<div class="well">
@@ -26,7 +31,7 @@
 						<div class="form-group">
 							<label class="control-label col-sm-4" id="yearLabel">Year: 1912</label>
 							<div class="col-sm-6">
-								1912<input id="yearSlider" type="range" min="1912" max="1948" step="4" value="1912" onchange="updateYear()">1948
+								<input style="width:70%" id="yearSlider" type="range" min="1912" max="1948" step="4" value="1912" onchange="updateYear()">
 							</div>
 						</div>
 						</br>
@@ -100,17 +105,7 @@
 									<button type="button" class="btn btn-default" onclick="reload()">Reload</button>
 								</div>
 							</div>
-						</div></br>
-						<!--
-						<div>
-							<div class="form-group">
-								<div class="col-sm-2 col-md-offset-8">
-									<!-- <button type="button" class="btn btn-default" onclick="getTestData()">Get Test Data</button> --
-									<button type="button" class="btn btn-default" onclick="removeArrows()">Clear Map</button>
-								</div>
-							</div>
-						</div></br></br>
-						-->
+						</div></br></br></br></br>
 					</div>
 
 					<!-- info panel -->
