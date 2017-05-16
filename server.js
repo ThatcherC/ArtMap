@@ -4,8 +4,6 @@ var mysql = 		require('mysql');
 var app = express();
 var cityLookup = require("./cityLookup.js").cityLookup;
 
-console.log(cityLookup["Tábor"]);
-
 var config = {
 		'host':'localhost',
 		'user':'root',
@@ -55,7 +53,14 @@ app.get("/getEntries",function(req, res){
             	console.log(err);
             }else{
 							for(var i = 0; i<rows.length; i++){
-								rows[i]['coords'] = cityLookup[rows[i].city];
+								console.log("City: "+rows[i].city)
+								if(rows[i].city!=""){
+									console.log(cityLookup[rows[i].city])
+									rows[i]['coords'] = cityLookup[rows[i].city].coords;
+									console.log(rows[i]['coords']);
+								}else{
+									rows[i]['coords'] = null;
+								}
 							}
               res.end( JSON.stringify(rows) );
             }

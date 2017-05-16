@@ -1,4 +1,5 @@
 var arrows = [];
+var cityToNationArrows = [];
 var map;
 var lineSymbol;
 
@@ -66,7 +67,7 @@ function reload(){
             //displayData( JSON.parse(result) );
             //console.log(result);
             dataForAllCountries = JSON.parse(result)
-            displayCountryCount( dataForAllCountries );
+            displayAllCountryData( dataForAllCountries );
           }});
 }
 
@@ -77,15 +78,16 @@ function showCountry(country){
           success: function(result){
             dataForOneCountry = JSON.parse(result)
             displayOneCountryText( dataForOneCountry, country);
+            displayArrowsForOneCountry( dataForOneCountry, country );
           }});
 }
 
 //displays medals and entries for each country in a given year
 //TODO this is very poorly named
-function displayCountryCount(data){
+function displayAllCountryData(data){
   removeArrows();
 
-  displayCountryText(data);
+  displayAllCountryText(data);
 
   var minPathWeight = 2; //?
   var totalEntries = data.reduce(function(acc, cur, i, a){return acc+cur.entries}, 0);
@@ -106,8 +108,6 @@ function displayCountryCount(data){
     const hex = grayness.toString(16);
     const digits = "00".substring(0, 2 - hex.length) + hex;
     const colorString = "#"+digits+digits+digits;
-    console.log(grayness)
-
     console.log(colorString);
 
     path = new google.maps.Polyline({
@@ -172,8 +172,7 @@ function toggleInfoWindow(data){
 
 }
 
-//TODO also kinda poorly named
-function displayCountryText(data){
+function displayAllCountryText(data){
   var text = "<big>"+yearSlider.value+" Results - "+hostLookup[yearSlider.value].city+"</big></br>";
   text += "<div style='height:200px; overflow: auto;' >";
   text += "<table class='table'>"
@@ -198,7 +197,7 @@ function displayCountryText(data){
 
 function displayOneCountryText(data, country){
   var text = "<big>"+country+"'s' Entries in "+yearSlider.value+"</big>";
-  text += "    <a onclick='displayCountryText(dataForAllCountries)'>(back)</a>"
+  text += "    <a onclick='displayAllCountryText(dataForAllCountries)'>(back)</a>"
   text += "<div style='height:200px; overflow: auto;' >";
   text += "<table class='table'>"
   text += "<tr><th>Title</th><th>Category</th><th>Award</th></tr>";
@@ -220,39 +219,62 @@ function displayOneCountryText(data, country){
   infoPanel.innerHTML = text;
 }
 
-//Draws stuff on the map - old, might not work anymore
-function displayData(data){
-  var pieces = data.pieces;
-  var artists = data['artists'];
+function displayArrowsForOneCountry(data, country){
+  removeCityArrows();
 
-  for(var i = 0; i<pieces.length; i++){
-    var country = pieces[i].countryOfOrigin;
-    var gamesCountry = pieces[i].gamesCountry;
-    var artistID = pieces[i].artistID;
-    var artistLocation = artists[artistID].location;
+  /*var minPathWeight = 2; //?
+  var totalEntries = data.reduce(function(acc, cur, i, a){return acc+cur.entries}, 0);
+  var fewestEntries = data.reduce(( acc, cur ) => Math.min( acc, cur.entries ), 100000);
+  var mostEntries = data.reduce(( acc, cur ) => Math.max( acc, cur.entries ), -1);
 
-    var start = placeLookup[artistLocation];
-    var middle = placeLookup[country];
-    var end = placeLookup[pieces[i].gamesCountry];
+  const minGray = 200;
+  const maxGray = 10;
 
-    var pathCoords = [
-      start, middle, end
-    ];
+  const scale = (maxGray-minGray)/(mostEntries-fewestEntries);
+  */
+  for(var i = 0; i < data.length; i++){
+    if(data[i].coords != null){
+      var start = data[i].coords;
+      var end = placeLookup[country];
 
-    path = new google.maps.Polyline({
-      path: pathCoords,
-      strokeColor: '#FF0000',
-      strokeOpacity: 1.0,
-      strokeWeight: 2,
-      //from https://developers.google.com/maps/documentation/javascript/examples/overlay-symbol-arrow
-      icons: [{
-        icon: lineSymbol,
-        offset: '100%'
-      }]
-    });
 
-    path.setMap(map);
-    arrows.push(path);
+      var pathCoords = [start, end];
+      /*
+      const grayness = Math.round((data[i].entries-fewestEntries)*scale+minGray);
+      const hex = grayness.toString(16);
+      const digits = "00".substring(0, 2 - hex.length) + hex;
+      const colorString = "#"+digits+digits+digits;
+      console.log(grayness)
+
+      console.log(colorString);
+      */
+
+      path = new google.maps.Polyline({
+        path: pathCoords,
+        strokeColor: '#DDAA99',
+        strokeOpacity: 1.0,
+        strokeWeight: 2,//2*Math.log(data[i].entries/fewestEntries),
+        //from https://developers.google.com/maps/documentation/javascript/examples/overlay-symbol-arrow
+        icons: [{
+          icon: lineSymbol,
+          offset: '100%'
+        }]
+      });
+      /*var marker = new google.maps.Marker({
+          position: start,
+          title: data[i].country
+      });*/
+
+      path.addListener('click',function(d){
+        return function(){
+          //toggleInfoWindow(d);
+          console.log("success");
+        }}(data[i]));
+
+      //marker.setMap(map);
+      path.setMap(map);
+      cityToNationArrows.push(path);
+    }
   }
 }
 
@@ -261,6 +283,13 @@ function removeArrows(){
     arrows[i].setMap(null);
   }
   arrows = [];
+}
+
+function removeCityArrows(){
+  for(var i = 0; i<cityToNationArrows.length; i++){
+    cityToNationArrows[i].setMap(null);
+  }
+  cityToNationArrows = [];
 }
 
 const hostLookup  = {1912: {city: "Stockholm", location: {lat:59.323469, lng:18.302331}},
