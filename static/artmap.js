@@ -252,7 +252,7 @@ function displayArrowsForOneCountry(data, country){
 
       path = new google.maps.Polyline({
         path: pathCoords,
-        strokeColor: '#DDAA99',
+        strokeColor: '#f49b42',
         strokeOpacity: 1.0,
         strokeWeight: 2,//2*Math.log(data[i].entries/fewestEntries),
         //from https://developers.google.com/maps/documentation/javascript/examples/overlay-symbol-arrow
