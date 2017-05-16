@@ -109,14 +109,18 @@ function queryToFilterConditions(q){
 app.get("/entry",function(req,res){
   var id = parseInt(req.query.id);
   var testURL = "https://s-media-cache-ak0.pinimg.com/originals/c3/d7/7f/c3d77f5f73a4f03041cb854d8dce6b82.jpg";
-  db.query("select Title as title, Athlete as competitor, personID as pid, ImageURL,\
-            Medal as award, `General Category` as gcat, event as speccat from olympic_results where id=?",
+  db.query("select Title as title, Athlete as competitor, personID as pid, ImageURL, year, Team as team,\
+            Medal as award, `General Category` as gcat, event as speccat, City as city from olympic_results where id=?",
             [id],function(err, rows){
               if(err){
               	console.log(err);
               }else{
                 var r = rows[0];
-                res.render('entry.ejs',{imgurl: r.ImageURL, title: r.title, competitor: r.competitor, gencat: r.gcat, speccat: r.speccat, award: r.award, pid: r.pid});
+                res.render('entry.ejs',{imgurl: r.ImageURL, title: r.title,
+																				competitor: r.competitor, gencat: r.gcat,
+																				speccat: r.speccat, award: r.award,
+																				pid: r.pid, year: r.year, city: hostLookup[r.year],
+																				submissionCity: r.city, team: r.team});
               }
             });
 });
@@ -166,3 +170,14 @@ app.get("/getart",function(req, res){
     });
   res.end("response");
 });
+
+const hostLookup  = {1912: {city: "Stockholm", location: {lat:59.323469, lng:18.302331}},
+                   1916: {city: "No Olympics this year (WWI)", location: {lat:0,lng:0}},
+                   1920: {city: "Antwerp", location: {lat:51.244400,lng:4.403144}},
+                   1924: {city: "Paris", location: {lat:48.875414,lng:2.418237}},
+                   1928: {city: "Amsterdam", location: {lat:52.392800,lng:4.781977}},
+                   1932: {city: "Los Angeles", location: {lat:34.077439,lng:-118.233604}},
+                   1936: {city: "Berlin", location: {lat:52.509176,lng:13.446451}},
+                   1940: {city: "No Olympics this year (WWII)", location: {lat:0,lng:0}},
+                   1944: {city: "No Olympics this year (WWII)", location: {lat:0,lng:0}},
+                   1948: {city: "London", location: {lat: 51.561475, lng:-0.122371}}};

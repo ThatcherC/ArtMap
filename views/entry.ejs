@@ -20,11 +20,18 @@
 				<!-- Filter and info section -->
 				<div class="col-md-5">
 					<div class=well>
-						<big><%= title %></big>
-						<p><a href="/competitor?id=<%=pid%>"><%= competitor %></a></p>
+						<h3 style="margin-top:0"><%= title %></h3>
 						<p>General Category: <%= gencat %></p>
-						<p>Specific Category <%= speccat %></p>
+						<p>Specific Category: <%= speccat %></p>
 						<p>Award: <%= award %></p>
+						<p>Entered in the <%= year %> <%= city %> Games</p>
+
+						<h4>Artist Info:</h4>
+						<p><a href="/competitor?id=<%=pid%>"><%= competitor %></a></p>
+						<p>Team: <%= team %></p>
+						<% if(submissionCity!=""){ %>
+							<p>Submitted from: <%= submissionCity %></p>
+							<% } %>
 					</div>
 				</div>
 			</div>

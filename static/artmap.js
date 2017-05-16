@@ -175,7 +175,7 @@ function toggleInfoWindow(data){
 
 function displayAllCountryText(data){
   var text = "<big>"+yearSlider.value+" Results - "+hostLookup[yearSlider.value].city+"</big></br>";
-  text += "<div style='height:200px; overflow: auto;' >";
+  text += "<div style='height:300px; overflow: auto;' >";
   text += "<table class='table'>"
   text += "<tr><th>Country</th><th>Gold</th><th>Silver</th><th>Bronze</th><th>Total Entries</th></tr>";
 
@@ -199,7 +199,7 @@ function displayAllCountryText(data){
 function displayOneCountryText(data, country){
   var text = "<big>"+country+"'s' Entries in "+yearSlider.value+"</big>";
   text += "    <a onclick='displayAllCountryText(dataForAllCountries)'>(back)</a>"
-  text += "<div style='height:200px; overflow: auto;' >";
+  text += "<div style='height:300px; overflow: auto;' >";
   text += "<table class='table'>"
   text += "<tr><th>Title</th><th>Category</th><th>Award</th></tr>";
 

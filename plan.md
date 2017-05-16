@@ -1,3 +1,20 @@
+TODOs:
+[x] clickable lines
+  [x] circles on the country ends of the lines
+[ ] legend for grayscale lines
+[x] country back button doesn't work
+[x] show cities->countries on a per-country basis
+  [ ] color distinction: orange or blue
+[ ] full metadata on autogenned pages
+  [x] add a couple things to the artwork pages:
+      city, year, olympic host city, country
+      [ ] touch up artist info
+[ ] back to homepage button
+[ ] imagurl indicator??
+[ ] credits page
+[ ] expand info window
+-----------------
+
 Geocoding:
 
 Ambiguities:
