@@ -203,7 +203,7 @@ function displayAllCountryText(data){
 function displayOneCountryText(data, country){
   var text = "<big>"+country+"'s' Entries in "+yearSlider.value+"</big>";
   text += "    <a onclick='displayAllCountryText(dataForAllCountries)'>(back)</a>"
-  text += "<div style='height:300px; overflow: auto;' >";
+  text += "<div style='height:290px; overflow: auto;' >";
   text += "<table class='table'>"
   text += "<tr><th>Title</th><th>Category</th><th>Award</th></tr>";
 
@@ -224,7 +224,8 @@ function displayOneCountryText(data, country){
     text+=line;
   }
 
-  text+="</table></div>";
+  text+="</table></div><small><i>* - Image available for this work</i></small>";
+  console.log(text);
   infoPanel.innerHTML = text;
 }
 
