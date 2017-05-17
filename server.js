@@ -53,11 +53,8 @@ app.get("/getEntries",function(req, res){
             	console.log(err);
             }else{
 							for(var i = 0; i<rows.length; i++){
-								console.log("City: "+rows[i].city)
 								if(rows[i].city!=""){
-									console.log(cityLookup[rows[i].city])
 									rows[i]['coords'] = cityLookup[rows[i].city].coords;
-									console.log(rows[i]['coords']);
 								}else{
 									rows[i]['coords'] = null;
 								}
