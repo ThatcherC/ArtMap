@@ -117,7 +117,7 @@ app.get("/entry",function(req,res){
                 res.render('entry.ejs',{imgurl: r.ImageURL, title: r.title,
 																				competitor: r.competitor, gencat: r.gcat,
 																				speccat: r.speccat, award: r.award,
-																				pid: r.pid, year: r.year, city: hostLookup[r.year],
+																				pid: r.pid, year: r.year, city: hostLookup[r.year].city,
 																				submissionCity: r.city, team: r.team});
               }
             });
