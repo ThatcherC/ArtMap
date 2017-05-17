@@ -39,6 +39,10 @@ function initializeMap(){
   yearLabel = document.getElementById("yearLabel");
   categorySelector = document.getElementById("category")
   infoPanel = document.getElementById("infoWindow");
+
+  var legend = document.getElementById('legend');
+  map.controls[google.maps.ControlPosition.RIGHT_TOP].push(legend);
+
   reload();
 }
 
