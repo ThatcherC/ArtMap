@@ -50,7 +50,7 @@ h1,h2,h4,h5,h6 {
 
 #timeline {
 	width: 1000px;
-	height: 700px;
+	height: 1300px;
 	overflow: hidden;
 	margin: 20px auto;
 	position: relative;
@@ -59,7 +59,7 @@ h1,h2,h4,h5,h6 {
 }
 #dates {
 	width: 100px;
-	height: 700px;
+	height: 1300px;
 	overflow: hidden;
 	float: left;
 	color: black;
@@ -86,12 +86,12 @@ h1,h2,h4,h5,h6 {
 		
 #issues {
 	width: 900px;
-	height: 1000px;
+	height: 1300px;
 	overflow: hidden;
 }	
 #issues li {
 	max-width: 800px; 
-	height: 1000px;
+	height: 1300px;
 	list-style: none;
     text-align: center;
 
@@ -165,10 +165,10 @@ border: 8px solid black;
 padding: 5px;
 font: 24px/36px sans-serif;
 width: 400px;
-height: 200px;
+height: 400px;
 overflow: scroll;
 position: relative;
-top:-100px; 
+top:20px; 
 }
 
 ::-webkit-scrollbar {
@@ -190,8 +190,8 @@ border-radius: 20px;
 background: black;  
 }
 
-/* Popup container - can be anything you want */
-.popup1 {
+
+.popup {
     position: relative;
     display: inline-block;
     cursor: pointer;
@@ -202,7 +202,7 @@ background: black;
 }
 
 /* The actual popup */
-.popup1 .popuptext1 {
+.popup .popuptext {
     visibility: hidden;
     width: 160px;
     background-color: #555;
@@ -217,35 +217,90 @@ background: black;
     margin-left: -80px;
 }
 
-/.tooltip {
-    position: relative;
-    display: inline-block;
-    border-bottom: 1px dotted black;
-}
-
-.tooltip .tooltiptext {
-    visibility: hidden;
-    width: 120px;
-    background-color: black;
-    color: #fff;
-    text-align: center;
-    border-radius: 6px;
-    padding: 5px 0;
-
-    /* Position the tooltip */
+/* Popup arrow */
+.popup .popuptext::after {
+    content: "";
     position: absolute;
-    z-index: 1;
+    top: 100%;
+    left: 50%;
+    margin-left: -5px;
+    border-width: 5px;
+    border-style: solid;
+    border-color: #555 transparent transparent transparent;
 }
 
-.tooltip:hover .tooltiptext {
+/* Toggle this class - hide and show the popup */
+.popup .show {
     visibility: visible;
+    -webkit-animation: fadeIn 1s;
+    animation: fadeIn 1s;
 }
 
+/* Add animation (fade in the popup) */
+@-webkit-keyframes fadeIn {
+    from {opacity: 0;} 
+    to {opacity: 1;}
+}
 
+@keyframes fadeIn {
+    from {opacity: 0;}
+    to {opacity:1 ;}
+}
 
+.modalDialog {
+	position: fixed;
+	font-family: Arial, Helvetica, sans-serif;
+	top: 0;
+	right: 0;
+	bottom: 0;
+	left: 0;
+	background: rgba(0,0,0,0.8);
+	z-index: 99999;
+	opacity:0;
+	-webkit-transition: opacity 400ms ease-in;
+	-moz-transition: opacity 400ms ease-in;
+	transition: opacity 400ms ease-in;
+	pointer-events: none;
+}
 
+.modalDialog:target {
+	opacity:1;
+	pointer-events: auto;
+}
 
+.modalDialog > div {
+	width: 400px;
+	position: relative;
+	margin: 10% auto;
+	padding: 5px 20px 13px 20px;
+	border-radius: 10px;
+	background: #fff;
+	background: -moz-linear-gradient(#fff, #999);
+	background: -webkit-linear-gradient(#fff, #999);
+	background: -o-linear-gradient(#fff, #999);
+}
 
+.close {
+	background: #606061;
+	color: #FFFFFF;
+	line-height: 25px;
+	position: absolute;
+	right: -12px;
+	text-align: center;
+	top: -10px;
+	width: 24px;
+	text-decoration: none;
+	font-weight: bold;
+	-webkit-border-radius: 12px;
+	-moz-border-radius: 12px;
+	border-radius: 12px;
+	-moz-box-shadow: 1px 1px 3px #000;
+	-webkit-box-shadow: 1px 1px 3px #000;
+	box-shadow: 1px 1px 3px #000;
+}
 
+.close:hover { background: #00d9ff; }
 
-
+.modal-backdrop.in {
+    opacity: 0.9;
+}
