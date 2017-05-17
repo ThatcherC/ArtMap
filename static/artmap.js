@@ -39,6 +39,10 @@ function initializeMap(){
   yearLabel = document.getElementById("yearLabel");
   categorySelector = document.getElementById("category")
   infoPanel = document.getElementById("infoWindow");
+
+  var legend = document.getElementById('legend');
+  map.controls[google.maps.ControlPosition.RIGHT_TOP].push(legend);
+
   reload();
 }
 
@@ -199,7 +203,7 @@ function displayAllCountryText(data){
 function displayOneCountryText(data, country){
   var text = "<big>"+country+"'s' Entries in "+yearSlider.value+"</big>";
   text += "    <a onclick='displayAllCountryText(dataForAllCountries)'>(back)</a>"
-  text += "<div style='height:300px; overflow: auto;' >";
+  text += "<div style='height:290px; overflow: auto;' >";
   text += "<table class='table'>"
   text += "<tr><th>Title</th><th>Category</th><th>Award</th></tr>";
 
@@ -209,14 +213,19 @@ function displayOneCountryText(data, country){
 
     var line = "<tr><td><a target='_blank' href=\"/entry?id="+
                   data[i].id +
-                  "\"><b>"+data[i].title+"</b></a></td>";
+                  "\"><b>"+data[i].title+"</b></a>";
+    if(data[i].havePicture==1){
+      line+="*";
+    }
+    line+="</td>";
     line+="<td>"+data[i].cat+"</td>";
     line+="<td>"+award+"</td>";
     line+="</tr>";
     text+=line;
   }
 
-  text+="</table></div>";
+  text+="</table></div><small><i>* - Image available for this work</i></small>";
+  console.log(text);
   infoPanel.innerHTML = text;
 }
 

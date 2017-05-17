@@ -46,7 +46,7 @@ app.get("/getEntries",function(req, res){
 	var conditions = queryToFilterConditions(req.query);
 
   db.query("select Title as title, Athlete as competitor, personID as artistid, City as city, \
-            Medal as award, `General Category` as cat, id from olympic_results where Team=? and " +
+            Medal as award, `General Category` as cat, ImageURL!='' as havePicture, id from olympic_results where Team=? and " +
 						conditions+";",
           [country], function(err, rows){
             if(err){
@@ -54,6 +54,7 @@ app.get("/getEntries",function(req, res){
             }else{
 							for(var i = 0; i<rows.length; i++){
 								if(rows[i].city!=""){
+									console.log(rows[i].city);
 									rows[i]['coords'] = cityLookup[rows[i].city].coords;
 								}else{
 									rows[i]['coords'] = null;
@@ -116,7 +117,7 @@ app.get("/entry",function(req,res){
                 res.render('entry.ejs',{imgurl: r.ImageURL, title: r.title,
 																				competitor: r.competitor, gencat: r.gcat,
 																				speccat: r.speccat, award: r.award,
-																				pid: r.pid, year: r.year, city: hostLookup[r.year],
+																				pid: r.pid, year: r.year, city: hostLookup[r.year].city,
 																				submissionCity: r.city, team: r.team});
               }
             });
