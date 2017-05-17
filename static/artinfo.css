@@ -50,7 +50,7 @@ h1,h2,h4,h5,h6 {
 
 #timeline {
 	width: 1000px;
-	height: 700px;
+	height: 1300px;
 	overflow: hidden;
 	margin: 20px auto;
 	position: relative;
@@ -86,12 +86,12 @@ h1,h2,h4,h5,h6 {
 		
 #issues {
 	width: 900px;
-	height: 1000px;
+	height: 1300px;
 	overflow: hidden;
 }	
 #issues li {
 	max-width: 800px; 
-	height: 1000px;
+	height: 1300px;
 	list-style: none;
     text-align: center;
 
@@ -165,10 +165,10 @@ border: 8px solid black;
 padding: 5px;
 font: 24px/36px sans-serif;
 width: 400px;
-height: 200px;
+height: 400px;
 overflow: scroll;
 position: relative;
-top:-100px; 
+top:20px; 
 }
 
 ::-webkit-scrollbar {
@@ -189,63 +189,4 @@ border-radius: 20px;
 ::-webkit-scrollbar-thumb:hover {
 background: black;  
 }
-
-/* Popup container - can be anything you want */
-.popup1 {
-    position: relative;
-    display: inline-block;
-    cursor: pointer;
-    -webkit-user-select: none;
-    -moz-user-select: none;
-    -ms-user-select: none;
-    user-select: none;
-}
-
-/* The actual popup */
-.popup1 .popuptext1 {
-    visibility: hidden;
-    width: 160px;
-    background-color: #555;
-    color: #fff;
-    text-align: center;
-    border-radius: 6px;
-    padding: 8px 0;
-    position: absolute;
-    z-index: 1;
-    bottom: 125%;
-    left: 50%;
-    margin-left: -80px;
-}
-
-/.tooltip {
-    position: relative;
-    display: inline-block;
-    border-bottom: 1px dotted black;
-}
-
-.tooltip .tooltiptext {
-    visibility: hidden;
-    width: 120px;
-    background-color: black;
-    color: #fff;
-    text-align: center;
-    border-radius: 6px;
-    padding: 5px 0;
-
-    /* Position the tooltip */
-    position: absolute;
-    z-index: 1;
-}
-
-.tooltip:hover .tooltiptext {
-    visibility: visible;
-}
-
-
-
-
-
-
-
-
 
