@@ -213,7 +213,11 @@ function displayOneCountryText(data, country){
 
     var line = "<tr><td><a target='_blank' href=\"/entry?id="+
                   data[i].id +
-                  "\"><b>"+data[i].title+"</b></a></td>";
+                  "\"><b>"+data[i].title+"</b></a>";
+    if(data[i].havePicture==1){
+      line+="*";
+    }
+    line+="</td>";
     line+="<td>"+data[i].cat+"</td>";
     line+="<td>"+award+"</td>";
     line+="</tr>";

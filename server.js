@@ -46,7 +46,7 @@ app.get("/getEntries",function(req, res){
 	var conditions = queryToFilterConditions(req.query);
 
   db.query("select Title as title, Athlete as competitor, personID as artistid, City as city, \
-            Medal as award, `General Category` as cat, id from olympic_results where Team=? and " +
+            Medal as award, `General Category` as cat, ImageURL!='' as havePicture, id from olympic_results where Team=? and " +
 						conditions+";",
           [country], function(err, rows){
             if(err){
