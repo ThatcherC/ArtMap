@@ -54,6 +54,7 @@ app.get("/getEntries",function(req, res){
             }else{
 							for(var i = 0; i<rows.length; i++){
 								if(rows[i].city!=""){
+									console.log(rows[i].city);
 									rows[i]['coords'] = cityLookup[rows[i].city].coords;
 								}else{
 									rows[i]['coords'] = null;
